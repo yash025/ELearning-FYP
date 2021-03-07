@@ -1,1 +1,5 @@
-# ELearning-FYP
+# E-Learning-FYP
+A WEB-BASED APPLICATION FOR KIDS USING DEEP LEARNING
+
+## Description
+
