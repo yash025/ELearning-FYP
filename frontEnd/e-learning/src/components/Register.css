@@ -1,0 +1,51 @@
+html,body {
+    background-image: url('../resources/images/register.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#R {
+    width: 45%;
+    height: 90%;
+    text-align: center;
+    top: 20%;
+    background-color: rgba(245, 245, 220, 0.075);
+    border:solid 5px rgba(202, 189, 166, 0.479);
+    border-width: medium;
+    margin:35px;
+    padding: 35px;
+}
+
+#register {
+    margin: auto;
+    font-family: cursive;
+    color: rgb(218 205 205 / 78%);
+
+}
+
+::placeholder{
+    color:black;
+    font-family: cursive;
+    
+}
+button {
+    background-color: #b00230;
+    width: 40%;
+    height: 18%;
+    margin: 16px;
+}
+.Error {
+    color: rgb(180, 23, 23);
+    display: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.InputBlock {
+    margin: 16px auto;
+    padding: 16px;
+    text-align: center;
+    width: 60%;
+    background-color: rgba(218, 205, 205, 0.575);
+    display: block;
+ 
+}
