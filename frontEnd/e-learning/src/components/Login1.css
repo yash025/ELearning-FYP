@@ -31,7 +31,6 @@ button {
     top: 20%;
     position: relative;
     width: 35%;
-    align-self: center;
     margin: 0 auto;
     background-color: rgba(245, 245, 220, 0.075);
     border:solid 5px rgba(202, 189, 166, 0.479);
