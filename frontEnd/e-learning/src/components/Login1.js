@@ -1,8 +1,6 @@
 import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
-// import {  TextField, Button } from '@material-ui/core';
-// import axios from 'axios';
 import './Login1.css'; 
 
 export default class Login extends Component{
@@ -50,6 +48,7 @@ export default class Login extends Component{
     }
     render(){
         return(
+            <div id="loginDiv">
             <FlexView id="E" column >
                 <form onSubmit={this.submitHandler}>
                         {/* <label style={{color:'black'}}>Username</label> */}
@@ -84,6 +83,7 @@ export default class Login extends Component{
                 </form>
                 <p onClick={this.registerHandler}>Register here</p>
             </FlexView>
+            </div>
         );
     }
 

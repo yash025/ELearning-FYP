@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
-
+import './Home.css';
 export default class Home extends Component{
 
 
@@ -12,15 +12,30 @@ export default class Home extends Component{
     drawingHandler = () => {
         router.stateService.go('drawing');
     }
+    clickHandler = (pageName) => {
+        router.stateService.go(pageName);
+    }
     render(){
         return(
-            <FlexView id="E" column >
-                <div>
-                    <p>Home</p>
+            <div id="homeDiv">
+            <FlexView id="H" column >
+                <div className='HomeBar'>
+                    <p className="HomeTitle">HOME PAGE</p>
+                    <p onClick={() => this.clickHandler('login')}className="Logout">Logout</p>
                 </div>
-                <p onClick={this.learningHandler}>Learning</p>
-                <p onClick={this.drawingHandler}>Drawing</p>
+                <div className='NavBar'> 
+                    <div className='NavElem'>About</div>
+                    <div className='NavElem'>My Progress</div>
+                    <div className='NavElem' onClick={() => this.clickHandler('profile')}>Profile Settings</div>
+                </div>
+                <div className= 'Section' id='section1' onClick={this.learningHandler}>
+                    <p className='SectionTitle'>Learning</p>
+                    </div>
+                <div className= 'Section' onClick={this.drawingHandler}>
+                    <p className='SectionTitle'>Drawing</p>
+                    </div>
             </FlexView>
+            </div>
         );
     }
 
