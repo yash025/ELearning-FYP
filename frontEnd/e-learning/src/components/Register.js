@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import FlexView from "react-flexview";
 // import {  TextField, Button } from '@material-ui/core';
-// import axios from 'axios';
+import { router } from "../services/router";
+import axios from 'axios';
 import './Register.css'; 
 
 export default class Register extends Component{
@@ -26,31 +27,34 @@ export default class Register extends Component{
 
     submitHandler = (event) => {
         console.log("submitted");
+        var flag=false;
         if( this.state.name===''||this.state.name===undefined){
             document.getElementById("R1").style.display = 'block';
-
+            flag=true;
         }
         if( this.state.email===''||this.state.email===undefined){
             document.getElementById("R2").style.display = 'block';
-
+            flag=true;
         }
         if( this.state.password===''||this.state.password===undefined){
             document.getElementById("R3").style.display = 'block';
+            flag=true;
+        }
+        else if(this.state.password!==this.state.confirmPassword){
+            document.getElementById("R4").style.display = 'block';
+            flag=true;
         }
         if( this.state.age===''||this.state.age===undefined){
             document.getElementById("R5").style.display = 'block';
-
+            flag=true;
         }
-        else {
+        if(!flag){
             const {name, email, password, confirmPassword,age} = this.state;
             // axios.post("", {userInfo : { email: email, password: password}});
             console.log(name,email,password,confirmPassword,age);
-            if(password!==confirmPassword){
-                document.getElementById("R4").style.display = 'block';
-            }
-            else{
-                alert("Successfully Registered !!");
-            }
+            alert("Successfully registered");
+            router.stateService.go('login');
+            
         }
         
         
@@ -58,6 +62,7 @@ export default class Register extends Component{
 
     render(){
         return(
+            <div id="registerDiv">
             <FlexView id="R" column >
                 <h2><span id="register">Sign Up!!</span></h2>
                 <form onSubmit={this.submitHandler}>
@@ -117,6 +122,7 @@ export default class Register extends Component{
                 </form>
                 
             </FlexView>
+            </div>
         );
     }
 

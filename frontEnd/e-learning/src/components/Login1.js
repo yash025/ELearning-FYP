@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import FlexView from "react-flexview";
-// import {  TextField, Button } from '@material-ui/core';
-// import axios from 'axios';
+import { router } from "../services/router";
 import './Login1.css'; 
 
 export default class Login extends Component{
@@ -33,17 +32,23 @@ export default class Login extends Component{
             console.log(email,password);
             if(email!==password){
                 document.getElementById("E3").style.display = 'block';
+
             }
             else{
                 alert("Successfully logged in !!");
+                router.stateService.go('home');
             }
         }
         
         
     }
 
+    registerHandler = () => {
+        router.stateService.go('register');
+    }
     render(){
         return(
+            <div id="loginDiv">
             <FlexView id="E" column >
                 <form onSubmit={this.submitHandler}>
                         {/* <label style={{color:'black'}}>Username</label> */}
@@ -76,8 +81,9 @@ export default class Login extends Component{
                         LOGIN
                     </button>
                 </form>
-                
+                <p onClick={this.registerHandler}>Register here</p>
             </FlexView>
+            </div>
         );
     }
 
