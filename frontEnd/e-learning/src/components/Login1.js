@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
+import {postRequest} from "../services/httpService";
 
 export default class Login extends Component{
     constructor(props){
@@ -27,17 +28,22 @@ export default class Login extends Component{
 
         }
         else {
-            const {email, password} = this.state;
+            const userinfo = this.state;
             // axios.post("", {userInfo : { email: email, password: password}});
-            console.log(email,password);
-            if(email!==password){
-                document.getElementById("E3").style.display = 'block';
-
-            }
-            else{
-                alert("Successfully logged in !!");
-                router.stateService.go('home');
-            }
+            let response = postRequest("http://localhost:5000/login",userinfo);
+            console.log(userinfo);
+            response.then(res => {
+                if(res.status == 200) {
+                    alert("Successfully logged in.");
+                    router.stateService.go('home');
+                } else {
+                    document.getElementById("E3").style.display = 'block';
+                    router.stateService.reload();
+                }
+                }).catch(res=>{
+                    alert("Could not connect");
+                    router.stateService.reload();
+                })
         }
         
         
