@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import FlexView from "react-flexview";
-// import { router } from "../services/router";
+import { router } from "../services/router";
 import CanvasArea from "../components/CanvasArea";
-import Dropdown from 'react-dropdown';
-import { useTimer } from 'use-timer';
+// import Dropdown from 'react-dropdown';
+// import { useTimer } from 'use-timer';
 import './Drawing.css';
+import { getRequest, postRequest } from '../services/httpService';
 
 export default class Learning extends Component{
     constructor(props)
@@ -35,6 +36,22 @@ export default class Learning extends Component{
                    'parrot','penguin','piano']
         }
     }
+    componentDidMount() {
+        let promise = getRequest("http://localhost:5000/points");   //return points from DB
+        console.log(promise);
+            promise.then(res => {
+                if(res.status == 200) {
+                    console.log("Got points.");
+                    this.setState({points: res.points});
+                } else {
+                    console.log("Couldn't get points.");
+                }
+                }).catch(res=>{
+                    alert("Could not connect");
+                    router.stateService.reload();
+                })
+    }
+
     completionHandler = (level) => {
         var points=this.state.points;
         if(level===1) {
@@ -52,8 +69,21 @@ export default class Learning extends Component{
             this.setState({points:points});
             console.log(points);
         }
-        this.setState({showCanvas: false});
-        console.log("Drawing Success");
+        console.log("Drawing Success points: "+ points);
+        let promise = postRequest("http://localhost:5000/updateCompleted", this.state.points);  //set that points in table
+        console.log(promise); 
+        promise.then(res => {
+            if(res.status == 200) {
+                alert("Successfully updated");
+                this.setState({showCanvas: false});
+            } else {
+                alert("Could not update");
+                // router.stateService.reload();
+            }
+            }).catch(res=>{
+                alert("Could not connnect.");
+                // router.stateService.reload();
+            })
         
     }
     
@@ -90,12 +120,19 @@ export default class Learning extends Component{
         let drawingBoard=null;
         console.log("Points = ");
         console.log(this.state.points);
+        let data = {
+            type: "drawing",
+            level: this.state.level,
+            chosen: this.state.chosen,
+            drawingComplete: this.completionHandler
+        }
         if(this.state.showCanvas){
             drawingBoard= (
                 <div className='DrawBoardContent'>
                     <p id ='drawBoardTitle'className='DrawBoard'>Draw {this.state.chosen}!!</p>
                     <div id='drawCanvas'className='DrawBoard'>
-                        <CanvasArea callback={() => this.completionHandler(this.state.level)}/>
+                        <CanvasArea objectProperty={data} />
+                        {/* callback={() => this.completionHandler(this.state.level)} */}
                     </div>
                 </div>
             );

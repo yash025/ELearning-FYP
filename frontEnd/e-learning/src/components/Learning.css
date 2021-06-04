@@ -100,6 +100,12 @@
     margin-left: 600px;
 }
 
+.CategoryDiv {
+    margin-left: auto;
+    margin-right: auto;
+    height: min-content;
+}
+
 .ElemDiv {
     /* background-color: violet; */
     width: fit-content;

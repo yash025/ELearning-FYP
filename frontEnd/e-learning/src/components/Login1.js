@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
-import {postRequest} from "../services/httpService";
+import {getRequest} from "../services/httpService";
 
 export default class Login extends Component{
     constructor(props){
@@ -30,14 +30,20 @@ export default class Login extends Component{
         else {
             const userinfo = this.state;
             // axios.post("", {userInfo : { email: email, password: password}});
-            let response = postRequest("http://localhost:5000/login",userinfo);
+            let promise = getRequest("http://localhost:5000/login",userinfo); 
             console.log(userinfo);
-            response.then(res => {
+            promise.then(res => {
                 if(res.status == 200) {
-                    alert("Successfully logged in.");
-                    router.stateService.go('home');
+                    if(res.data.result){
+                        alert("Successfully logged in.");
+                        router.stateService.go('home');
+                    }
+                    else {
+                        document.getElementById("E3").style.display = 'block';
+                        router.stateService.reload();
+                    }
                 } else {
-                    document.getElementById("E3").style.display = 'block';
+                    alert("Could not get response.")
                     router.stateService.reload();
                 }
                 }).catch(res=>{

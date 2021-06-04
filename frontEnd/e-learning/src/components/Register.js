@@ -52,10 +52,10 @@ export default class Register extends Component{
         if(!flag){
             const userinfo  = this.state;
             // axios.post("", {userInfo : { email: email, password: password}});
-            let response = postRequest("http://localhost:5000/register",userinfo);
+            let promise = postRequest("https://localhost:5000/register",userinfo); //store name, email, password, age in DB
             // console.log(name,email,password,confirmPassword,age);
             console.log(userinfo);
-            response.then(res => {
+            promise.then(res => {
                 if(res.status == 200) {
                     alert("Successfully registered");
                     router.stateservice.go('login');
@@ -64,7 +64,7 @@ export default class Register extends Component{
                     router.stateService.reload();
                 }
                 }).catch(res=>{
-                    alert("Could not register, please try again.");
+                    alert("Could not connect.");
                     router.stateService.reload();
                 })
         }
