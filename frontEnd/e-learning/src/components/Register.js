@@ -2,8 +2,9 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 // import {  TextField, Button } from '@material-ui/core';
 import { router } from "../services/router";
-import axios from 'axios';
+// import axios from 'axios';
 import './Register.css'; 
+import {postRequest} from "../services/httpService";
 
 export default class Register extends Component{
     constructor(props){
@@ -49,12 +50,23 @@ export default class Register extends Component{
             flag=true;
         }
         if(!flag){
-            const {name, email, password, confirmPassword,age} = this.state;
+            const userinfo  = this.state;
             // axios.post("", {userInfo : { email: email, password: password}});
-            console.log(name,email,password,confirmPassword,age);
-            alert("Successfully registered");
-            router.stateService.go('login');
-            
+            let promise = postRequest("https://localhost:5000/register",userinfo); //store name, email, password, age in DB
+            // console.log(name,email,password,confirmPassword,age);
+            console.log(userinfo);
+            promise.then(res => {
+                if(res.status == 200) {
+                    alert("Successfully registered");
+                    router.stateservice.go('login');
+                } else {
+                    alert("Could not register, please try again.");
+                    router.stateService.reload();
+                }
+                }).catch(res=>{
+                    alert("Could not connect.");
+                    router.stateService.reload();
+                })
         }
         
         
