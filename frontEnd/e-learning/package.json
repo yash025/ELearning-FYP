@@ -14,11 +14,12 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "1.1.5",
     "react-speech": "^1.0.2",
-    "use-timer": "^2.0.1"
+    "use-timer": "^2.0.1",
+    "yarn-install": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && flask run --no--debugger",
+    "start-api": "cd api && venv/Scripts/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
