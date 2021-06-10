@@ -29,7 +29,7 @@ def login():
     cursor.execute('select Password from user where Email = %s',(email, ))
     data = cursor.fetchone()
     cursor.close
-    if(len(data) == 0):
+    if not data:
         return make_response(jsonify(
             message = "Didn't find any account associated with this EmailID, Please create a new account"
         ), 200)
@@ -47,20 +47,20 @@ def register():
     email = params.get("email")
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select Password from user where Email = %s',(email, ))
-    result = cursor.fetchone
-    if(len(result) != 0):
+    data = cursor.fetchone()
+    password = str("2571999")
+    if not data:
+        cursor.execute('insert into user values(%s, %s, %s, %s, %s, %s, %s)',
+        (email, params.get("firstname"), params.get("lastname"),params.get("age"), params.get("password"), 0, params.get("phonenumber")))
+        mysql.connection.commit()
+        cursor.close
         return make_response(jsonify(
-            message = "Account already exits with this EmailID, try logging in"
+            message = "User with emailID %s is registered successfully"
         ), 200)
-    
-    print(request.args)
-    print(request.data)
-    print(request.path)
-    response = Response()
-
-    response.status_code = 200
-    response.data = "This is from backend"
-    return response
+    elif(password != data['Password']):
+        return make_response(jsonify(
+            message = "Account already exists, try logging in"
+        ), 200)
 
 
 if __name__ == '__main__':
