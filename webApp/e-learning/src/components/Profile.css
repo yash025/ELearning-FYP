@@ -1,0 +1,14 @@
+#homeLink {
+    margin: auto 30px;
+    font-size: 22px;
+    font-family: cursive;
+    color: whitesmoke;
+}
+
+#profileDiv {
+    background-image: url('../resources/images/profile.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
