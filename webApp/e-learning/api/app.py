@@ -1,4 +1,3 @@
-from types import resolve_bases
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from flask import Flask, request, Response, jsonify, make_response
@@ -48,19 +47,29 @@ def register():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select Password from user where Email = %s',(email, ))
     data = cursor.fetchone()
-    password = str("2571999")
     if not data:
         cursor.execute('insert into user values(%s, %s, %s, %s, %s, %s, %s)',
         (email, params.get("firstname"), params.get("lastname"),params.get("age"), params.get("password"), 0, params.get("phonenumber")))
         mysql.connection.commit()
         cursor.close
         return make_response(jsonify(
-            message = "User with emailID %s is registered successfully"
+            message = "User registered successfully"
         ), 200)
-    elif(password != data['Password']):
-        return make_response(jsonify(
-            message = "Account already exists, try logging in"
+    return make_response(jsonify(
+        message = "Account already exists, try logging in"
         ), 200)
+
+@app.route('/points', methods = ['GET'])
+def FetchPointsForUser():
+    params = request.args
+    email = params.get("email")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('select Points from user where Email = %s',(email, ))
+    data = cursor.fetchone()
+    if not data:
+        return make_response(jsonify(message = "Error fetching points for the user associated with emailId {}".format(email)), 200)
+    return make_response(jsonify(message = data['Points']), 200)
+
 
 
 if __name__ == '__main__':
