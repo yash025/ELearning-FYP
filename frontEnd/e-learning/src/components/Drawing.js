@@ -42,7 +42,7 @@ export default class Learning extends Component{
             promise.then(res => {
                 if(res.status == 200) {
                     console.log("Got points.");
-                    this.setState({points: res.points});
+                    this.setState({points: res.data.points});
                 } else {
                     console.log("Couldn't get points.");
                 }
@@ -70,7 +70,8 @@ export default class Learning extends Component{
             console.log(points);
         }
         console.log("Drawing Success points: "+ points);
-        let promise = postRequest("http://localhost:5000/updateCompleted", this.state.points);  //set that points in table
+        const data = { type: "drawing", points: this.state.points};
+        let promise = postRequest("http://localhost:5000/updateCompleted", data);  //set that points in table
         console.log(promise); 
         promise.then(res => {
             if(res.status == 200) {

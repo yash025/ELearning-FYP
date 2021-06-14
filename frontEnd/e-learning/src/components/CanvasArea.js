@@ -53,12 +53,14 @@ const CanvasArea = props => {
     //Learning
     if(props.objectProperty && props.objectProperty.type == "learning") {
       data = {
+        type: props.objectProperty.type,
         dataUrl: dataUrl,
         category: props.objectProperty.category,
         selected: props.objectProperty.selected
       }
     } else {
       data = {
+        type: props.objectProperty.type,
         dataUrl: dataUrl,
         chosen: props.objectProperty.chosen,
         level: props.objectProperty.level 
