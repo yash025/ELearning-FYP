@@ -1,9 +1,11 @@
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from flask import Flask, request, Response, jsonify, make_response
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+# CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -14,16 +16,20 @@ mysql = MySQL(app)
 
 
 @app.route('/hello_world', methods = ['GET', 'POST'])
+@cross_origin()
 def hello_world():
     return make_response(jsonify(
             message = "Hello World from Yashwanth"
         ), 200)
 
 @app.route('/login', methods = ['GET', 'POST'])
+@cross_origin()
 def login():
     params = request.args
     email = params.get("email")
     password = params.get("password")
+    print(email)
+    print(password)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select Password from user where Email = %s',(email, ))
     data = cursor.fetchone()
@@ -41,6 +47,7 @@ def login():
         ), 200)
 
 @app.route('/register', methods = ['POST', 'GET'])
+@cross_origin()
 def register():
     params = request.args
     email = params.get("email")
@@ -49,7 +56,7 @@ def register():
     data = cursor.fetchone()
     if not data:
         cursor.execute('insert into user values(%s, %s, %s, %s, %s, %s, %s)',
-        (email, params.get("firstname"), params.get("lastname"),params.get("age"), params.get("password"), 0, params.get("phonenumber")))
+        (email, params.get("firstName"), params.get("lastName"),params.get("age"), params.get("password"), 0, params.get("phoneNumber")))
         mysql.connection.commit()
         cursor.close
         return make_response(jsonify(
@@ -60,6 +67,7 @@ def register():
         ), 200)
 
 @app.route('/points', methods = ['GET'])
+@cross_origin()
 def FetchPointsForUser():
     params = request.args
     email = params.get("email")

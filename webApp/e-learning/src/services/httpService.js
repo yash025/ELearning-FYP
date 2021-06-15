@@ -1,6 +1,7 @@
 import axios from "axios";
 
-var axiosObj = axios.create({});
+const baseURL = "http://localhost:5000"
+const headers = { "content-type": "application/json" };
 // export function setToken(token) {
 //   let config = {
 //     headers: {
@@ -13,14 +14,13 @@ var axiosObj = axios.create({});
 
 
  export function getRequest(url, params) { 
-    let getPromise = axiosObj.get(url, {
-        params: params
-    })
-    return getPromise;
+    return axios.get(baseURL + url, {
+        params : params
+    }, headers)
 }
 
 export function postRequest(url, params) { 
-    let postPromise = axiosObj.post(url, {
+    let postPromise = axios.post(url, {
         params: params
     })
     return postPromise;

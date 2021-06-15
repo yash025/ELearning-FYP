@@ -3,6 +3,11 @@ import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
 import {getRequest} from "../services/httpService";
+import axios from "axios"
+
+const apiURL = "http://localhost:5000"
+const headers = { "content-type": "application/json" };
+
 
 export default class Login extends Component{
     constructor(props){
@@ -29,12 +34,12 @@ export default class Login extends Component{
         }
         else {
             const userinfo = this.state;
-            // axios.post("", {userInfo : { email: email, password: password}});
-            let promise = getRequest("http://localhost:5000/login",userinfo); 
-            console.log(userinfo);
-            promise.then(res => {
-                if(res.status == 200) {
-                    if(res.data.result){
+            axios
+            .get(apiURL + '/login', { params : { email: this.state.email, password: this.state.password} }, headers)
+                .then((response) => {
+                    console.log(response.data)
+                    if(response.status >= 200 && response.status < 300) {
+                        console.log(response.status)
                         alert("Successfully logged in.");
                         router.stateService.go('home');
                     }
@@ -42,14 +47,10 @@ export default class Login extends Component{
                         document.getElementById("E3").style.display = 'block';
                         router.stateService.reload();
                     }
-                } else {
-                    alert("Could not get response.")
-                    router.stateService.reload();
-                }
-                }).catch(res=>{
-                    alert("Could not connect");
-                    router.stateService.reload();
                 })
+            .catch((error) => {
+                console.log(error);
+            });
         }
         
         
