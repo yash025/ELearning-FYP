@@ -2,10 +2,9 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import CanvasArea from "../components/CanvasArea";
-// import Dropdown from 'react-dropdown';
-// import { useTimer } from 'use-timer';
 import './Drawing.css';
 import { getRequest, postRequest } from '../services/httpService';
+import {tempstorage} from '../services/TempStorage';
 
 export default class Learning extends Component{
     constructor(props)
@@ -37,12 +36,14 @@ export default class Learning extends Component{
         }
     }
     componentDidMount() {
-        let promise = getRequest("http://localhost:5000/points");   //return points from DB
+        let email = () => tempstorage.getProfile('email');
+        // let email = "";
+        let promise = getRequest("http://localhost:5000/points",email);   //return points from DB
         console.log(promise);
             promise.then(res => {
-                if(res.status == 200) {
+                if(res.status === 200) {
                     console.log("Got points.");
-                    this.setState({points: res.points});
+                    this.setState({points: res.data.points});
                 } else {
                     console.log("Couldn't get points.");
                 }
@@ -70,10 +71,11 @@ export default class Learning extends Component{
             console.log(points);
         }
         console.log("Drawing Success points: "+ points);
-        let promise = postRequest("http://localhost:5000/updateCompleted", this.state.points);  //set that points in table
+        const data = { type: "drawing", points: this.state.points};
+        let promise = postRequest("http://localhost:5000/updateCompleted", data);  //set that points in table
         console.log(promise); 
         promise.then(res => {
-            if(res.status == 200) {
+            if(res.status === 200) {
                 alert("Successfully updated");
                 this.setState({showCanvas: false});
             } else {
