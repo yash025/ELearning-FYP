@@ -73,7 +73,7 @@ export default class Register extends Component{
             <div id="registerDiv">
             <FlexView id="R" column >
                 <h2><span id="register">Sign Up!!</span></h2>
-                <form onSubmit={this.submitHandler}>
+                <form >
                         {/* <label style={{color:'black'}}>Username</label> */}
                         <input 
                         className="InputBlock"
