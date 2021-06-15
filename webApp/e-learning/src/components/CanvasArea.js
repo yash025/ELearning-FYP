@@ -1,7 +1,7 @@
-import { green } from '@material-ui/core/colors';
-import { prop } from '@uirouter/core';
+// import { green } from '@material-ui/core/colors';
+// import { prop } from '@uirouter/core';
 import React, {  useEffect, useState, useRef } from 'react';
-import { getRequest, postRequest } from '../services/httpService';
+import { postRequest } from '../services/httpService';
 import './CanvasArea.css';
 import {router} from "../services/router";
 
@@ -51,14 +51,16 @@ const CanvasArea = props => {
     let data = {}
 
     //Learning
-    if(props.objectProperty && props.objectProperty.type == "learning") {
+    if(props.objectProperty && props.objectProperty.type === "learning") {
       data = {
+        type: props.objectProperty.type,
         dataUrl: dataUrl,
         category: props.objectProperty.category,
         selected: props.objectProperty.selected
       }
     } else {
       data = {
+        type: props.objectProperty.type,
         dataUrl: dataUrl,
         chosen: props.objectProperty.chosen,
         level: props.objectProperty.level 
@@ -69,7 +71,7 @@ const CanvasArea = props => {
     let promise = postRequest("http://localhost:5000/canvas",data);
     console.log(promise);
     promise.then(res => {
-    if(res.status == 200) {
+    if(res.status === 200) {
         alert("Url sent, Recieved drawn Status");
           console.log(res)
         if(res.data.result)

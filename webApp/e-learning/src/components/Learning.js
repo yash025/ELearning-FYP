@@ -33,20 +33,20 @@ export default class Learning extends Component{
             //var completed = [...response.data.completed];
             //this.setState({completed: completed});
         //});
-        // let response = getRequest("http://localhost:5000/learning-completed");
-        // console.log(response);
-        //     response.then(res => {
-        //         if(res.status == 200) {
-        //             console.log("Got completed list.");
-        //             var completed = [...res.completed];
-        //             this.setState({completed: completed});
-        //         } else {
-        //             console.log("Couldn't get completed list.");
-        //         }
-        //         }).catch(res=>{
-        //             alert("Could not connect");
-        //             router.stateService.reload();
-        //         })
+        let promise = getRequest("http://localhost:5000/completedList");
+        console.log(promise);
+            promise.then(res => {
+                if(res.status === 200) {
+                    console.log("Got completed list.");
+                    var completed = [...res.data.completed];
+                    this.setState({completed: completed});
+                } else {
+                    console.log("Couldn't get completed list.");
+                }
+                }).catch(res=>{
+                    alert("Could not connect");
+                    router.stateService.reload();
+                })
     }
 
     showDiv = (category) => {
@@ -74,26 +74,26 @@ export default class Learning extends Component{
         let cat =this.getCategory(element);
 
         //remove later start
-        this.setState({showCanvas: false, selectedCategory: cat});
+        // this.setState({showCanvas: false, selectedCategory: cat});
         //remove later end
-        
+        const data = { type: "learning", element: element, category: cat};
         //Uncomment call later start
-        // let response = postRequest("http://localhost:5000/updateCompleted", element);  //set that element as completed in table and return status + completed list
-        // console.log(response); 
-        // response.then(res => {
-        //     if(res.status == 200) {
-        //         alert("Successfully updated");
-        //         this.setState({showCanvas: false, selectedCategory: cat});
-        //         // var completed = [...res.completed];
-        //         // this.setState({completed: completed});
-        //     } else {
-        //         alert("Could not update");
-        //         // router.stateService.reload();
-        //     }
-        //     }).catch(res=>{
-        //         alert("Could not connnect.");
-        //         // router.stateService.reload();
-        //     })
+        let response = postRequest("http://localhost:5000/updateCompleted", data);  //set that element as completed in table and return status + completed list
+        console.log(response); 
+        response.then(res => {
+            if(res.status === 200) {
+                alert("Successfully updated");
+                this.setState({showCanvas: false, selectedCategory: cat});
+                // var completed = [...res.completed];
+                // this.setState({completed: completed});
+            } else {
+                alert("Could not update");
+                // router.stateService.reload();
+            }
+            }).catch(res=>{
+                alert("Could not connnect.");
+                // router.stateService.reload();
+            })
         //Uncomment call later end
         
     }

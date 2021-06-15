@@ -41,6 +41,7 @@ export default class Login extends Component{
                     if(response.status >= 200 && response.status < 300) {
                         console.log(response.status)
                         alert("Successfully logged in.");
+                        tempstorage.setProfile({email: 'userinfo.email'});
                         router.stateService.go('home');
                     }
                     else {
