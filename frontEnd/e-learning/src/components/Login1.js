@@ -3,6 +3,7 @@ import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
 import {getRequest} from "../services/httpService";
+import {tempstorage} from "../services/TempStorage";
 
 export default class Login extends Component{
     constructor(props){
@@ -33,9 +34,10 @@ export default class Login extends Component{
             let promise = getRequest("http://localhost:5000/login",userinfo); 
             console.log(userinfo);
             promise.then(res => {
-                if(res.status == 200) {
+                if(res.status === 200) {
                     if(res.data.result){
                         alert("Successfully logged in.");
+                        tempstorage.setProfile({email: 'userinfo.email'});
                         router.stateService.go('home');
                     }
                     else {

@@ -1,16 +1,26 @@
 class TempStorage {
-    constructor() {
-        this.profile = {
-            name: "Pavithra",
-            age: 10,
-            gender: "female",
-            location: "India"
-        };
+    constructor(props) {
+        this.profile= {
+                         name: '',
+                         email: '',
+                         password: '',
+                         age: ''
+                     };
+    
     }
     
-    getProfile = () => {
+    getProfile = (key) => {
+        if(key!== undefined) {
+            return this.profile[key]||null;
+        }
         return this.profile;
     };
+
+    setProfile = (newProfile) => {
+        for (let key in newProfile) {
+               this.profile[key] = newProfile[key];
+          }
+        }
 }
 
 export const tempstorage = new TempStorage();

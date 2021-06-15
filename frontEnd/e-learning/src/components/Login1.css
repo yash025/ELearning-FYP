@@ -32,9 +32,9 @@ button {
     position: relative;
     width: 35%;
     margin: 0 auto;
-    background-color: rgba(245, 245, 220, 0.075);
+    /* background-color: rgba(245, 245, 220, 0.075);
     border:solid 5px rgba(202, 189, 166, 0.479);
-    border-width: medium;
+    border-width: medium; */
 }
 form{
     height: 100%;

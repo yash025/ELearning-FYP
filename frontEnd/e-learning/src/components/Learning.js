@@ -34,9 +34,9 @@ export default class Learning extends Component{
             //this.setState({completed: completed});
         //});
         let promise = getRequest("http://localhost:5000/completedList");
-        console.log(response);
+        console.log(promise);
             promise.then(res => {
-                if(res.status == 200) {
+                if(res.status === 200) {
                     console.log("Got completed list.");
                     var completed = [...res.data.completed];
                     this.setState({completed: completed});
@@ -81,7 +81,7 @@ export default class Learning extends Component{
         let response = postRequest("http://localhost:5000/updateCompleted", data);  //set that element as completed in table and return status + completed list
         console.log(response); 
         response.then(res => {
-            if(res.status == 200) {
+            if(res.status === 200) {
                 alert("Successfully updated");
                 this.setState({showCanvas: false, selectedCategory: cat});
                 // var completed = [...res.completed];

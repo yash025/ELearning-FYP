@@ -109,21 +109,3 @@
     height: 100%;
 
 }
-
-#homeHeader {
-    margin: auto;
-    font-family: cursive;
-    font-size: 30px;
-    color: whitesmoke;
-}
-
-#avatar {
-    margin: auto 10px;
-}
-
-#homeLink {
-    margin: auto 30px;
-    font-size: 22px;
-    font-family: cursive;
-    color: whitesmoke;
-}

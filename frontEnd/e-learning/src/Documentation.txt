@@ -92,3 +92,29 @@ return: {
 }
 *********************************************************************************************
 
+7.
+url: /profile
+method: get
+object recieved from ui: data = { email: primary key required for querying the user.}
+return: {
+        status: 200/anything,
+        data: {
+            profile : {
+                        name: name of the user,
+                         email: email,
+                         password: password,
+                         age: age
+            }
+        }
+}
+*********************************************************************************************
+
+8.
+url: /updateProfile
+method: post
+object recieved from ui: profileInfo = {oldEmail : "", ... (rest of the keys which are updated)};
+                                        if(email is not updated)
+                                            oldEmail = "";
+                                        else
+                                            oldEmail = (value of old email required to change the PK of the user in DB)
+return: { status: 200/anything }

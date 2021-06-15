@@ -34,6 +34,11 @@
   opacity: 0.3;
   cursor: pointer;
 }
+
+button:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
 /* .App {
   padding: 20px;
   height: 200px;
