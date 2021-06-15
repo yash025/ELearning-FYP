@@ -11,6 +11,7 @@
     width: 60%;
     background-color: rgba(218, 205, 205, 0.575);
     display: block;
+    border-radius: 15px;
     
     
 }
@@ -23,6 +24,7 @@ button {
     width: 40%;
     height: 18%;
     margin: 16px;
+    border-radius: 10px;
 }
 
 #E {
