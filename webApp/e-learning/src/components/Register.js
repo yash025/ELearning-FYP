@@ -2,9 +2,9 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Register.css'; 
-import axios from "axios"
+import axios from "axios";
 
-const apiURL = "http://localhost:5000"
+const apiURL = "http://localhost:5000";
 const headers = { "content-type": "application/json" };
 
 export default class Register extends Component{
@@ -52,7 +52,7 @@ export default class Register extends Component{
         }
         if(!flag){
             const userinfo  = this.state;
-<<<<<<< HEAD
+
             console.log(userinfo);
                 axios
                 .get(apiURL + '/register', { params : { email: this.state.email, name: this.state.name, 
@@ -71,22 +71,21 @@ export default class Register extends Component{
                 .catch((error) => {
                     console.log(error);
                 });
-=======
-            let promise = postRequest("https://localhost:5000/register",userinfo); //store name, email, password, age in DB
-            console.log(userinfo);
-            promise.then(res => {
-                if(res.status === 200) {
-                    alert("Successfully registered");
-                    router.stateservice.go('login');
-                } else {
-                    alert("Could not register, please try again.");
-                    router.stateService.reload();
-                }
-                }).catch(res=>{
-                    alert("Could not connect.");
-                    router.stateService.reload();
-                })
->>>>>>> paani
+
+            // let promise = postRequest("https://localhost:5000/register",userinfo); //store name, email, password, age in DB
+            // console.log(userinfo);
+            // promise.then(res => {
+            //     if(res.status === 200) {
+            //         alert("Successfully registered");
+            //         router.stateservice.go('login');
+            //     } else {
+            //         alert("Could not register, please try again.");
+            //         router.stateService.reload();
+            //     }
+            //     }).catch(res=>{
+            //         alert("Could not connect.");
+            //         router.stateService.reload();
+            //     })
         }
         
         
@@ -97,11 +96,7 @@ export default class Register extends Component{
             <div id="registerDiv">
             <FlexView id="R" column >
                 <h2><span id="register">Sign Up!!</span></h2>
-<<<<<<< HEAD
                 <form>
-=======
-                <form >
->>>>>>> paani
                         {/* <label style={{color:'black'}}>Username</label> */}
                         <input 
                         className="InputBlock"
