@@ -11,20 +11,33 @@ CREATE TABLE `user` (
   PRIMARY KEY (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE `completed` (
-  `DoodleName` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  PRIMARY KEY (`DoodleName`,`Email`),
-  KEY `Email` (`Email`),
-  CONSTRAINT `completed_ibfk_1` FOREIGN KEY (`Email`) REFERENCES `user` (`Email`),
-  CONSTRAINT `completed_ibfk_2` FOREIGN KEY (`DoodleName`) REFERENCES `doodles` (`DoodleName`)
+CREATE TABLE `playDoodles` (
+  `playDoodleName` varchar(255) NOT NULL,
+  `level` varchar(50),
+  PRIMARY KEY (`playDoodleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `doodles` (
-  `DoodleName` varchar(255) NOT NULL,
+CREATE TABLE `playCompleted` (
+  `playDoodleName` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`playDoodleName`,`email`),
+  KEY `Email` (`Email`),
+  CONSTRAINT `completed_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`Email`),
+  CONSTRAINT `completed_ibfk_2` FOREIGN KEY (`playDoodleName`) REFERENCES `playDoodles` (`playDoodleName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `learnDoodles` (
+  `learnDoodleName` varchar(255) NOT NULL,
   `isAlphabet` tinyint DEFAULT '0',
   `isDigit` tinyint DEFAULT '0',
-  `isPlayDoodle` tinyint DEFAULT '0',
-  `isDrawDoodle` tinyint DEFAULT '0',
-  PRIMARY KEY (`DoodleName`)
+  PRIMARY KEY (`learnDoodleName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `learnCompleted` (
+  `learnDoodleName` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`learnDoodleName`,`email`),
+  KEY `Email` (`Email`),
+  FOREIGN KEY (`email`) REFERENCES `user` (`Email`),
+  FOREIGN KEY (`learnDoodleName`) REFERENCES `learnDoodles` (`learnDoodleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
