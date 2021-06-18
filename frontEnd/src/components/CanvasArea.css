@@ -1,0 +1,47 @@
+/* .App {
+  text-align: center;
+} */
+ #canvas {
+  /* position: relative; */
+  background-color:whitesmoke;
+  width: 98%;
+  height: 98%;
+  margin: 0px;
+  border-radius: 10px;
+  border: solid 3px black;
+} 
+
+.ButtonClass1 {
+  border: solid 2px black;
+  border-radius: 5px;
+  width: fit-content;
+  color: rgb(226, 202, 172);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  font-size: larger;
+  display: inline-block;
+  margin: 2px;
+  text-align: center;
+  height: 35px;
+  
+}
+
+.CanvasArea {
+  height: 100%;
+  width: 100%;
+}
+.ButtonClass1:hover{
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+/* .App {
+  padding: 20px;
+  height: 200px;
+  width: 250px;
+  background-color:burlywood ;
+}  */

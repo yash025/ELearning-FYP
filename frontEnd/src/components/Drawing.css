@@ -1,0 +1,96 @@
+#drawingDiv {
+    background-image: url('../resources/images/canvas1.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.DrawBar {
+    background-color: #fee85f;
+    height: 40px;
+    text-align: center;
+    /* border: solid 2px black; */
+}
+
+.DrawTitle {
+    /* background-color: #fee85f; */
+    font-weight: bolder;
+    font-size: 30px;
+    margin: 0px;
+}
+
+.DrawContent {
+    /* background-color: blue; */
+    background-color: #458ccc;
+    width: fit-content;
+    margin: auto;
+    border: solid 2px black;
+    border-radius: 5px;
+}
+
+.LevelDiv {
+    display: inline-block;
+    margin: 5px;
+    border: solid 2px black ;
+    width: 70px;
+    border: solid 2px black;
+    border-radius: 5px;
+    background-color:#6a6a6a ;
+}
+
+.LevelDiv:hover {
+    opacity: 0.3;
+    cursor: pointer;
+}
+.Level {
+    background-color: bc142d;
+    margin: 0 auto;
+    text-align: center;
+    width:100%;
+   
+}
+.LevelTitle {
+    background-color: #f8bdc1e0;
+    margin: 0 auto;
+    text-align: center;
+    width:250px;
+    height:30px;
+    border: solid 2px black;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    font-size: larger;
+
+}
+
+#title {
+    height: fit-content;
+    /* background-color: blue; */
+    margin: 0px;
+}
+
+.DrawBoardContent{
+    /* background-color: blanchedalmond; */
+    height:470px;
+}
+
+.DrawBoard {
+    /* background-color: blue; */
+    margin: 0 auto;
+    width: 50%;
+    border-radius: 3px;
+    
+}
+#drawBoardTitle {
+    height: 20px;
+    font-weight: bold;
+    font-size: larger;
+    color:whitesmoke;
+    /* margin-left: 3px; */
+}
+#drawCanvas {
+    height: 93%;
+    
+}
