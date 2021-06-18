@@ -1,8 +1,8 @@
-from re import L
+from flask.globals import current_app
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-from flask import Flask, json, request, Response, jsonify, make_response
-from flask_cors import CORS, cross_origin
+from flask import Flask, json, request, jsonify, make_response
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ mysql = MySQL(app)
 @cross_origin()
 def hello_world():
     return make_response(jsonify(
-            message = "Hello World from Yashwanth"
+            result = "Hello World from Yashwanth"
         ), 200)
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -62,10 +62,10 @@ def register():
         mysql.connection.commit()
         cursor.close
         return make_response(jsonify(
-            message = "User registered successfully"
+            result = "User registered successfully"
         ), 200)
     return make_response(jsonify(
-        message = "Account already exists, try logging in"
+        result = "Account already exists, try logging in"
         ), 200)
 
 @app.route('/points', methods = ['GET'])
@@ -78,13 +78,15 @@ def FetchPointsForUser():
         cursor.execute('select Points from user where Email = %s',(email, ))
         data = cursor.fetchone()
         cursor.close
-    except:
+    except Exception as e:
         return make_response(jsonify(
-        message = "unknown error while fetching the points from DB, contact support!"
+            result = "ERROR {} has occured, Contact Support!".format(e.__class__)
         ), 200) 
     if not data:
-        return make_response(jsonify(message = "Error fetching points for the user associated with emailId {}".format(email)), 200)
-    return make_response(jsonify(message = data['Points']), 200)
+        return make_response(jsonify(
+            result = "Error fetching points for the user associated with emailId {}".format(email)
+            ), 200)
+    return make_response(jsonify(result = data['Points']), 200)
 
 @app.route('/updateCompleted', methods = ['GET', 'POST'])
 @cross_origin()
@@ -101,11 +103,11 @@ def update_Completed():
             mysql.connection.commit()
             cursor.close
             return make_response(jsonify(
-                message = "Updated Successfully"
+                result = "Updated Successfully"
             ), 200)
-        except:
+        except Exception as e:
             return make_response(jsonify(
-                message = "unknown error while updating the DB, contact support!"
+                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
             ), 200) 
     else:
         try:
@@ -125,13 +127,73 @@ def update_Completed():
             mysql.connection.commit()
             cursor.close
             return make_response(jsonify(
-                message = "Updated Succesfully."
+                result = "Updated Succesfully."
             ), 200) 
-        except:
+        except Exception as e:
             return make_response(jsonify(
-                message = "unknown error while updating the DB, contact support!"
-            ), 200)    
+                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+            ), 200)   
 
+@app.route('/completedList', methods = ['GET']) 
+@cross_origin()
+def fetchCompletedDoodles():
+    params = request.args
+    email = params.get("email")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    try:
+        cursor.execute('select C.learnDoodleName as doodleName from learncompleted C, user U where U.email = C.email and U.email = %s', (email, ))
+        data = cursor.fetchall()
+        completedList = [value['doodleName'] for value in data]
+        cursor.close
+        return make_response(jsonify(
+            result = completedList
+        ), 200)
+    except Exception as e:
+        return make_response(jsonify(
+                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+            ), 200)
+
+@app.route('/profile', methods = ['GET'])
+@cross_origin()
+def fetchProfileDetails():
+    params = request.args
+    email = params.get("email")
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('select FirstName, LastName, Age, Password, Points, PhoneNumber from user where email = %s', (email, ))
+        data = cursor.fetchall()
+        return make_response(jsonify(
+            result = data
+        ), 200)
+    except Exception as e:
+        return make_response(jsonify(
+                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+            ), 200)
+
+@app.route('/updateProfile', methods = ['GET', 'POST'])
+@cross_origin()
+def updateProfile():
+    params = request.args
+    email = params.get("email")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if("firstName" in params):
+        cursor.execute('update user set firstName = %s where email = %s', (params.get('firstName'), email, ))
+        mysql.connection.commit()
+    if("lastName" in params):
+        cursor.execute('update user set lastName = %s where email = %s', (params.get('lastName'), email, ))
+        mysql.connection.commit()
+    if("age" in params):
+        cursor.execute('update user set age = %s where email = %s', (params.get('age'), email, ))
+        mysql.connection.commit()
+    if("phoneNumber" in params):
+        cursor.execute('update user set phoneNumber = %s where email = %s', (params.get('phoneNumber'), email, ))
+        mysql.connection.commit()
+    if("password" in params):
+        cursor.execute('update user set password = %s where email = %s', (params.get('password'), email, ))
+        mysql.connection.commit()
+    return make_response(jsonify(
+        result = "Successfully Updated!"
+    ), 200)
 
 if __name__ == '__main__':
     app.run(host = "localhost", port = 5000, debug = True)
