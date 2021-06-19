@@ -3,9 +3,9 @@ import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
 import {getRequest} from "../services/httpService";
-import axios from "axios"
+import axios from "axios";
 
-const apiURL = "http://localhost:5000"
+const apiURL = "http://localhost:5000";
 const headers = { "content-type": "application/json" };
 
 
