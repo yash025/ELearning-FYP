@@ -191,9 +191,27 @@ def updateProfile():
     if("password" in params):
         cursor.execute('update user set password = %s where email = %s', (params.get('password'), email, ))
         mysql.connection.commit()
+    cursor.close()
     return make_response(jsonify(
         result = "Successfully Updated!"
     ), 200)
+
+@app.route('/fetchRanks', methods = ['GET'])
+@cross_origin()
+def fetchRanks():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('select firstName, lastName from user order by points desc')
+    rankList = cursor.fetchall()
+    cursor.close()
+    return make_response(jsonify(
+        ranks = rankList
+    ), 200)
+
+# @app.route('/canvas', methods = ['GET'])
+# @cross_origin()
+# def doodleRecognition():
+
+    
 
 if __name__ == '__main__':
     app.run(host = "localhost", port = 5000, debug = True)
