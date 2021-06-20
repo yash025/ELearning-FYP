@@ -40,7 +40,7 @@ export default class Learning extends Component{
                 }
                 }).catch(res=>{
                     alert("Could not connect");
-                    router.stateService.reload();
+                    // router.stateService.reload();
                 })
     }
 
