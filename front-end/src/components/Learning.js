@@ -6,6 +6,7 @@ import CanvasArea from "../components/CanvasArea";
 import Element from "./Element";
 import './Learning.css';
 import {getRequest,postRequest} from "../services/httpService";
+import { tempstorage } from '../services/TempStorage';
 
 export default class Learning extends Component{
     constructor(props){
@@ -28,7 +29,8 @@ export default class Learning extends Component{
     }
 
     componentDidMount() {
-        let promise = getRequest("/completedList");
+        let email = tempstorage.getProfile(email);
+        let promise = getRequest("/completedList",{email: email});
         console.log(promise);
             promise.then(res => {
                 if(res.status === 200) {
@@ -71,7 +73,8 @@ export default class Learning extends Component{
         //remove later start
         // this.setState({showCanvas: false, selectedCategory: cat});
         //remove later end
-        const data = { type: "learning", element: element, category: cat};
+        let email = tempstorage.getProfile(email);
+        const data = { email: email, type: "learning", element: element, category: cat};
         //Uncomment call later start
         let response = postRequest("/updateCompleted", data);  //set that element as completed in table and return status + completed list
         console.log(response); 

@@ -67,6 +67,7 @@ def register():
         result = "Account already exists, try logging in"
         ), 400)
 
+<<<<<<< HEAD
 @app.route('/points', methods = ['GET'])
 @cross_origin()
 def FetchPointsForUser():
@@ -92,6 +93,27 @@ def FetchPointsForUser():
         points = data['Points']
         ), 200)
 >>>>>>> Stashed changes
+=======
+# @app.route('/points', methods = ['GET'])
+# @cross_origin()
+# def FetchPointsForUser():
+#     params = request.args
+#     email = params.get("email")
+#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     try:
+#         cursor.execute('select Points from user where Email = %s',(email, ))
+#         data = cursor.fetchone()
+#         cursor.close
+#     except Exception as e:
+#         return make_response(jsonify(
+#             result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+#         ), 200) 
+#     if not data:
+#         return make_response(jsonify(
+#             result = "Error fetching points for the user associated with emailId {}".format(email)
+#             ), 200)
+#     return make_response(jsonify(result = data['Points']), 200)
+>>>>>>> paani
 
 @app.route('/updateCompleted', methods = ['GET', 'POST'])
 @cross_origin()
@@ -99,15 +121,21 @@ def update_Completed():
     params = request.args
     email = params.get("email")
     type = params.get("type")
+<<<<<<< HEAD
     doodleName = params.get("element")
 <<<<<<< Updated upstream
     print(email, type, doodleName)
 =======
     print(email, type)
 >>>>>>> Stashed changes
+=======
+    # doodleName = params.get("element")
+    print(email, type)
+>>>>>>> paani
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if(type == "learning"):
         try:
+            doodleName = params.get("element")
             cursor.execute('insert into learnCompleted values(%s, %s)',(doodleName, email, ))
             mysql.connection.commit()
             cursor.close
@@ -122,14 +150,14 @@ def update_Completed():
         try:
             doodleName = params.get("element")
             level = params.get("level")
-            cursor.execute('insert into playCompleted values(%s, %s)', (doodleName, email, ))
-            mysql.connection.commit()
+            # cursor.execute('insert into playCompleted values(%s, %s)', (doodleName, email, ))
+            # mysql.connection.commit()
             cursor.execute('select Points from user where Email = %s', (email, ))
             data = cursor.fetchone()
             points = data['Points']
-            if(level == "easy"):
+            if(level == "1"):
                 points = points + 5
-            elif(level == "medium"):
+            elif(level == "2"):
                 points = points + 10
             else:
                 points = points + 15
@@ -170,11 +198,15 @@ def fetchProfileDetails():
     email = params.get("email")
     try:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         cursor.execute('select FirstName, LastName, Age, Password, Points, PhoneNumber from user where email = %s', (email, ))
 =======
         cursor.execute('select FirstName as firstName, LastName as lastName, Age as age, Password as password, PhoneNumber as phoneNumber from user where email = %s', (email, ))
 >>>>>>> Stashed changes
+=======
+        cursor.execute('select FirstName, LastName, Age, Password, PhoneNumber from user where email = %s', (email, ))
+>>>>>>> paani
         data = cursor.fetchall()
         return make_response(jsonify(
             profile = data

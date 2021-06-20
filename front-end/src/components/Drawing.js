@@ -36,42 +36,43 @@ export default class Learning extends Component{
         }
     }
     componentDidMount() {
-        let email = () => tempstorage.getProfile('email');
-        // let email = "";
-        let promise = getRequest("/points",email);   //return points from DB
-        console.log(promise);
-            promise.then(res => {
-                if(res.status === 200) {
-                    console.log("Got points.");
-                    this.setState({points: res.data.points});
-                } else {
-                    console.log("Couldn't get points.");
-                }
-                }).catch(res=>{
-                    alert("Could not connect");
-                    router.stateService.reload();
-                })
+        // let email = () => tempstorage.getProfile('email');
+        // // let email = "";
+        // let promise = getRequest("/points",{email: email});   //return points from DB
+        // console.log(promise);
+        //     promise.then(res => {
+        //         if(res.status === 200) {
+        //             console.log("Got points.");
+        //             this.setState({points: res.data.points});
+        //         } else {
+        //             console.log("Couldn't get points.");
+        //         }
+        //         }).catch(res=>{
+        //             alert("Could not connect");
+        //             router.stateService.reload();
+        //         })
     }
 
     completionHandler = (level) => {
-        var points=this.state.points;
-        if(level===1) {
-            points=points+10;
-            this.setState({points:points});
-            console.log(points);
-        }
-        else if(level===2){
-            points+=25;
-            this.setState({points:points});
-            console.log(points);
-        }
-        else if(level===3) {
-            points+=40;
-            this.setState({points:points});
-            console.log(points);
-        }
-        console.log("Drawing Success points: "+ points);
-        const data = { type: "drawing", points: this.state.points};
+        // var points=this.state.points;
+        // if(level===1) {
+        //     points=points+10;
+        //     this.setState({points:points});
+        //     console.log(points);
+        // }
+        // else if(level===2){
+        //     points+=25;
+        //     this.setState({points:points});
+        //     console.log(points);
+        // }
+        // else if(level===3) {
+        //     points+=40;
+        //     this.setState({points:points});
+        //     console.log(points);
+        // }
+        // console.log("Drawing Success points: "+ points);
+        let email = () => tempstorage.getProfile('email');
+        const data = { email: email, type: "drawing", level: level};
         let promise = postRequest("/updateCompleted", data);  //set that points in table
         console.log(promise); 
         promise.then(res => {
