@@ -21,7 +21,7 @@ const CanvasArea = props => {
     // context.scale(2,2)
     context.lineCap= "round"
     context.strokeStyle = "black"
-    context.lineWidth =5 
+    context.lineWidth =15
     contextRef.current = context
   },[])
 
