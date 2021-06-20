@@ -301,8 +301,10 @@ def doodleRecognition():
                         result = "Not Correct"
                     ), 400)
     else:
-        model = load_model('C:/Users/Yashwanth/Documents/Project/Elearning-FYP/backEnd/api/Digit_Recognition/digitRecognition.model')
-        label_dict = {0:'One',1:'Two',2:'Three',3:'Four',4:'Five',5:'Six',6:'Seven',7:'Eight',8:'Nine'}
+        model = load_model('C:/Users/Yashwanth/Documents/Project/Elearning-FYP/backEnd/api/Doodle_Recognition/quickdraw.model')
+        label_dict = {0:"apple", 1:"arm", 2:"banana", 3:"bandage", 4:"baseball", 5:"bat", 6:"blackberry", 7:"bread", 8:"candle", 
+        9:"carrot", 10:"circle", 11:"cloud", 12:"diamond", 13:"door", 14:"elbow", 15:"feather", 16:"foot", 17:"frying pan", 18:"hat", 
+        19:"hexagon", 20:"hockey stick", 21:"key", 22:"knife", 23:"leaf", 24:"octagon", 25:"paintbrush", 26:"star", 27:"triangle", 28:"zigzag"}
         cnn_probab = model.predict(new_test_cnn, batch_size=32, verbose=0)
         pr = model.predict_classes(arr.reshape((1, 28, 28, 1)))
         expected = params.get('selected')
