@@ -28,12 +28,7 @@ export default class Learning extends Component{
     }
 
     componentDidMount() {
-        //httpservice.get()
-        //backendapi call -- axios.get("https://backendAPIfetchCompleted").then(response => {
-            //var completed = [...response.data.completed];
-            //this.setState({completed: completed});
-        //});
-        let promise = getRequest("http://localhost:5000/completedList");
+        let promise = getRequest("/completedList");
         console.log(promise);
             promise.then(res => {
                 if(res.status === 200) {
@@ -78,7 +73,7 @@ export default class Learning extends Component{
         //remove later end
         const data = { type: "learning", element: element, category: cat};
         //Uncomment call later start
-        let response = postRequest("http://localhost:5000/updateCompleted", data);  //set that element as completed in table and return status + completed list
+        let response = postRequest("/updateCompleted", data);  //set that element as completed in table and return status + completed list
         console.log(response); 
         response.then(res => {
             if(res.status === 200) {

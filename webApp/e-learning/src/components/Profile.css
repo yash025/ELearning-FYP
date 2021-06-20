@@ -125,9 +125,9 @@
  #profileContent {
      /* background-color: orange; */
      border-radius: 15px;
-     width: 50%;
+     width: 100%;
      height: 100%;
-     margin: auto;
+     float: left;
  }
 
  #avatar1 {
@@ -142,20 +142,21 @@
  #avatarDiv {
      height: 50%;
      /* background-color:orangered; */
-     width: 100%;
+     width: 50%;
+     margin-top: 20px;
  }
 
  #nameUnderAvatar {
      background-color: rgba(226, 220, 214, 0.384);
-     margin: 30px auto;
+     margin: 20px;
      width: 50%;
      height: 50px;
      border-radius: 15px;
-     border: 2px solid rgba(245, 245, 245, 0.623)
+     border: 2px solid rgba(245, 245, 245, 0.623);
     
  }
 
- #nameUnderAvatarText {
+ .NameUnderAvatarText {
      margin: auto;
      width:fit-content;
      /* background-color: pink; */
@@ -221,4 +222,9 @@
     font-size: x-large;
     border-radius: 15px;
     font-style: bold;
+ }
+
+ #namesUnderAvatar {
+     /* background-color: aquamarine; */
+     width: 50%;
  }

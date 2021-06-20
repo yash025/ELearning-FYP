@@ -6,6 +6,7 @@ import Home from "../components/Home";
 import Learning from "../components/Learning";
 import Drawing from "../components/Drawing";
 import Profile from "../components/Profile";
+import MyProgress from "../components/MyProgress";
 
 // Create router instance + setup
 export const router = new UIRouterReact();
@@ -43,6 +44,11 @@ const states = [
         name: 'profile',
         url: '/profile',
         component: Profile
+    },
+    {
+        name: 'myProgress',
+        url: '/myProgress',
+        component: MyProgress
     }
 ];
 states.forEach(state => router.stateRegistry.register(state));
