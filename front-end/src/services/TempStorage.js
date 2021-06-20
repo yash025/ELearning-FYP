@@ -1,10 +1,12 @@
 class TempStorage {
     constructor(props) {
         this.profile= {
-                         name: '',
+                         firstName: '',
+                         lastName: '',
                          email: '',
                          password: '',
-                         age: ''
+                         age: '',
+                         phoneNumber: ''
                      };
     
     }

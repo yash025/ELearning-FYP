@@ -13,11 +13,13 @@ export default class Register extends Component{
         super(props);
 
         this.state = {
-            name: '',
+            firstName: '',
+            lastName: '',
             email : '',
             password: '',
             confirmPassword: '',
-            age: ''
+            age: '',
+            phoneNumber: ''
         }
 
     }
@@ -31,24 +33,32 @@ export default class Register extends Component{
     submitHandler = (event) => {
         console.log("submitted");
         var flag=false;
-        if( this.state.name===''||this.state.name===undefined){
+        if( this.state.firstName===''||this.state.firstName===undefined){
             document.getElementById("R1").style.display = 'block';
             flag=true;
         }
-        if( this.state.email===''||this.state.email===undefined){
+        if( this.state.lastName===''||this.state.lastName===undefined){
             document.getElementById("R2").style.display = 'block';
             flag=true;
         }
-        if( this.state.password===''||this.state.password===undefined){
+        if( this.state.email===''||this.state.email===undefined){
             document.getElementById("R3").style.display = 'block';
             flag=true;
         }
-        else if(this.state.password!==this.state.confirmPassword){
+        if( this.state.password===''||this.state.password===undefined){
             document.getElementById("R4").style.display = 'block';
             flag=true;
         }
-        if( this.state.age===''||this.state.age===undefined){
+        else if(this.state.password!==this.state.confirmPassword){
             document.getElementById("R5").style.display = 'block';
+            flag=true;
+        }
+        if( this.state.age===''||this.state.age===undefined){
+            document.getElementById("R6").style.display = 'block';
+            flag=true;
+        }
+        if( this.state.phoneNumber===''||this.state.phoneNumber===undefined){
+            document.getElementById("R7").style.display = 'block';
             flag=true;
         }
         if(!flag){
@@ -56,8 +66,8 @@ export default class Register extends Component{
 
             // console.log(userinfo);
             //     axios
-            //     .get(apiURL + '/register', { params : { email: this.state.email, name: this.state.name, 
-            //         age : this.state.age, password : this.state.password } }, headers)
+            //     .get(apiURL + '/register', { params : { email: this.state.email, firstName: this.state.firstName, lastName: this.state.lastName, 
+            //         age : this.state.age, password : this.state.password, phoneNumber: this.state.phoneNumber } }, headers)
             //         .then((response) => {
             //             console.log(response.data)
             //             if(response.status >= 200 && response.status < 300) {
@@ -96,18 +106,29 @@ export default class Register extends Component{
         return(
             <div id="registerDiv">
             <FlexView id="R" column >
-                <h2><span id="register">Sign Up!!</span></h2>
+                <div>
+                <h2 id="register">Sign Up!!</h2>
+                </div>
                 <form>
                         {/* <label style={{color:'black'}}>Username</label> */}
                         <input 
                         className="InputBlock"
                         type="text"
-                        name="name"
-                        placeholder="Enter your full name"
-                        value={this.state.name}
+                        name="firstName"
+                        placeholder="Enter your first name"
+                        value={this.state.firstName}
                         onChange={this.changeHandler}
                         required/>
                     <span className="Error" id="R1">This is a required field</span>
+                    <input 
+                        className="InputBlock"
+                        type="text"
+                        name="lastName"
+                        placeholder="Enter your last name"
+                        value={this.state.lastName}
+                        onChange={this.changeHandler}
+                        required/>
+                    <span className="Error" id="R2">This is a required field</span>
                     <input 
                         className="InputBlock"
                         type="email"
@@ -116,7 +137,7 @@ export default class Register extends Component{
                         value={this.state.email}
                         onChange={this.changeHandler}
                         required/>
-                    <span className="Error" id="R2">This is a required field</span>
+                    <span className="Error" id="R3">This is a required field</span>
                     
                     {/* <label style={{color:'black'}}>Password</label> */}
                     <input 
@@ -127,7 +148,7 @@ export default class Register extends Component{
                         value={this.state.password}
                         onChange={this.changeHandler}
                         required/>
-                    <span className="Error" id="R3">This is a required field</span>
+                    <span className="Error" id="R4">This is a required field</span>
                       <input 
                         className="InputBlock"
                         type="password"
@@ -137,7 +158,7 @@ export default class Register extends Component{
                         onChange={this.changeHandler}
                         required/>
                    
-                    <span className="Error" id="R4">** Password Mismatch</span>
+                    <span className="Error" id="R5">** Password Mismatch</span>
 
                     <input 
                         className="InputBlock"
@@ -147,8 +168,17 @@ export default class Register extends Component{
                         value={this.state.age}
                         onChange={this.changeHandler}
                         required/>  
-                    <span className="Error" id="R5">This is a required field</span>
-                    <button  type="submit" onClick={this.submitHandler}>
+                    <span className="Error" id="R6">This is a required field</span>
+                    <input 
+                        className="InputBlock"
+                        type="text"
+                        name="phoneNumber"
+                        placeholder="Enter your phone number"
+                        value={this.state.phoneNumber}
+                        onChange={this.changeHandler}
+                        required/>
+                    <span className="Error" id="R7">This is a required field</span>
+                    <button  id = "regButton" type="submit" onClick={this.submitHandler}>
                         REGISTER
                     </button>
                 </form>

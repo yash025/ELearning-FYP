@@ -68,25 +68,25 @@ def register():
         result = "Account already exists, try logging in"
         ), 200)
 
-@app.route('/points', methods = ['GET'])
-@cross_origin()
-def FetchPointsForUser():
-    params = request.args
-    email = params.get("email")
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    try:
-        cursor.execute('select Points from user where Email = %s',(email, ))
-        data = cursor.fetchone()
-        cursor.close
-    except Exception as e:
-        return make_response(jsonify(
-            result = "ERROR {} has occured, Contact Support!".format(e.__class__)
-        ), 200) 
-    if not data:
-        return make_response(jsonify(
-            result = "Error fetching points for the user associated with emailId {}".format(email)
-            ), 200)
-    return make_response(jsonify(result = data['Points']), 200)
+# @app.route('/points', methods = ['GET'])
+# @cross_origin()
+# def FetchPointsForUser():
+#     params = request.args
+#     email = params.get("email")
+#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     try:
+#         cursor.execute('select Points from user where Email = %s',(email, ))
+#         data = cursor.fetchone()
+#         cursor.close
+#     except Exception as e:
+#         return make_response(jsonify(
+#             result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+#         ), 200) 
+#     if not data:
+#         return make_response(jsonify(
+#             result = "Error fetching points for the user associated with emailId {}".format(email)
+#             ), 200)
+#     return make_response(jsonify(result = data['Points']), 200)
 
 @app.route('/updateCompleted', methods = ['GET', 'POST'])
 @cross_origin()
@@ -94,11 +94,12 @@ def update_Completed():
     params = request.args
     email = params.get("email")
     type = params.get("type")
-    doodleName = params.get("element")
-    print(email, type, doodleName)
+    # doodleName = params.get("element")
+    print(email, type)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if(type == "learning"):
         try:
+            doodleName = params.get("element")
             cursor.execute('insert into learnCompleted values(%s, %s)',(doodleName, email, ))
             mysql.connection.commit()
             cursor.close
@@ -112,14 +113,14 @@ def update_Completed():
     else:
         try:
             level = params.get("level")
-            cursor.execute('insert into playCompleted values(%s, %s)', (doodleName, email, ))
-            mysql.connection.commit()
+            # cursor.execute('insert into playCompleted values(%s, %s)', (doodleName, email, ))
+            # mysql.connection.commit()
             cursor.execute('select Points from user where Email = %s', (email, ))
             data = cursor.fetchone()
             points = data['Points']
-            if(level == "easy"):
+            if(level == "1"):
                 points = points + 5
-            elif(level == "medium"):
+            elif(level == "2"):
                 points = points + 10
             else:
                 points = points + 15
@@ -160,7 +161,7 @@ def fetchProfileDetails():
     email = params.get("email")
     try:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select FirstName, LastName, Age, Password, Points, PhoneNumber from user where email = %s', (email, ))
+        cursor.execute('select FirstName, LastName, Age, Password, PhoneNumber from user where email = %s', (email, ))
         data = cursor.fetchall()
         return make_response(jsonify(
             result = data

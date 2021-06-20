@@ -70,7 +70,7 @@ export default class Profile extends Component{
     enable = () => {
         console.log("Enable Function")
         document.getElementById("personalInfoTextValue").disabled = "";
-        document.getElementById("personalInfoTextValue1").disabled = "";
+        // document.getElementById("personalInfoTextValue1").disabled = "";
         document.getElementById("personalInfoTextValue2").disabled = "";
         document.getElementById("personalInfoTextValue3").disabled = "";
         console.log("Enable function end")
@@ -87,14 +87,18 @@ export default class Profile extends Component{
         console.log(profileInfo);
         this.setAllContentToFalse();
         var changedProfileDetails = {};
-        changedProfileDetails.oldEmail = "";
+        // changedProfileDetails.oldEmail = "";
         for(let key in profileInfo){
-            if(tempstorage.getProfile(key) !== profileInfo[key])
-                changedProfileDetails.key = profileInfo[key];
+            if(profileInfo[key] != "" && tempstorage.getProfile(key) !== profileInfo[key])
+                changedProfileDetails[key] = profileInfo[key];
         }
-        if(tempstorage.getProfile('email') !== profileInfo['email']){
-            changedProfileDetails.oldEmail = tempstorage.getProfile('email');
-        }
+        if(Object.keys(changedProfileDetails).length === 0)
+            alert("Empty");
+        else{
+        // if(tempstorage.getProfile('email') !== profileInfo['email']){
+        //     changedProfileDetails.oldEmail = tempstorage.getProfile('email');
+        // }
+        console.log(changedProfileDetails);
         let promise = postRequest("/updateProfile",profileInfo); //store name, email, password, age in DB
             console.log(profileInfo);
             promise.then(res => {
@@ -110,6 +114,7 @@ export default class Profile extends Component{
                     alert("Could not submit.");
                     router.stateService.reload();
                 })
+            }
     }
     render(){
         let profile = null,personalInfo =null, changeSettings = null;
@@ -120,8 +125,12 @@ export default class Profile extends Component{
                 <p className='personalInfoHeadingText'>Personal Information</p>
                 </FlexView>
                 <FlexView className='personalInfo'> 
-                <p className='personalInfoText'>Name: </p>
-                <p className='personalInfoTextValue'>{this.profile.name}</p>
+                <p className='personalInfoText'>First Name: </p>
+                <p className='personalInfoTextValue'>{this.profile.firstName}</p>
+                </FlexView>
+                <FlexView className='personalInfo'> 
+                <p className='personalInfoText'>Last Name: </p>
+                <p className='personalInfoTextValue'>{this.profile.lastName}</p>
                 </FlexView>
                 <FlexView className='personalInfo'>
                 <p className='personalInfoText'>Email: </p>
@@ -135,6 +144,10 @@ export default class Profile extends Component{
                 <p className='personalInfoText'>Age: </p>
                 <p className='personalInfoTextValue'>{this.profile.age}</p>
                 </FlexView>
+                <FlexView className='personalInfo'> 
+                <p className='personalInfoText'>Phone Number: </p>
+                <p className='personalInfoTextValue'>{this.profile.phoneNumber}</p>
+                </FlexView>
                 </FlexView>)
         }
         if(this.state.showProfile) {
@@ -145,7 +158,7 @@ export default class Profile extends Component{
                     </div>
                     <FlexView column id = "namesUnderAvatar">
                     <div id ="nameUnderAvatar" >
-                    <p className='NameUnderAvatarText'>Name: {this.profile.name}</p>
+                    <p className='NameUnderAvatarText'>Name: {this.profile.firstName + this.profile.lastName}</p>
                     </div> 
                     <div id ="nameUnderAvatar" >
                     <p className='NameUnderAvatarText'>username: {this.profile.email}</p>                  
@@ -163,25 +176,37 @@ export default class Profile extends Component{
                 <p className='personalInfoHeadingText'>Update Information</p>
                 </FlexView>
                 <FlexView className='personalInfo'> 
-                <p className='personalInfoText'>Name: </p>
+                <p className='personalInfoText'>First Name: </p>
                 <input 
                         type = "text"
                         id="personalInfoTextValue" 
                         className='personalInfoTextValue' 
-                        placeholder={this.profile.name} 
-                        name="name"
+                        placeholder={this.profile.firstName} 
+                        name="firstName"
+                        onChange = {this.changeHandler}
+                        disabled/>
+                </FlexView>
+                <FlexView className='personalInfo'> 
+                <p className='personalInfoText'>Last Name: </p>
+                <input 
+                        type = "text"
+                        id="personalInfoTextValue1" 
+                        className='personalInfoTextValue' 
+                        placeholder={this.profile.lastName} 
+                        name="lastName"
                         onChange = {this.changeHandler}
                         disabled/>
                 </FlexView>
                 <FlexView className='personalInfo'>
                 <p className='personalInfoText'>Email: </p>
-                <input type = "text"
+                <p className='personalInfoTextValue'>{this.profile.email}</p>
+                {/* <input type = "text"
                        name="email"
                        onChange = {this.changeHandler}
                        id="personalInfoTextValue1" 
                        className='personalInfoTextValue' 
                        placeholder={this.profile.email} 
-                       disabled/>
+                       disabled/> */}
                 </FlexView>
                 <FlexView className='personalInfo'>
                 <p className='personalInfoText' >Password: </p>
@@ -203,6 +228,17 @@ export default class Profile extends Component{
                         id="personalInfoTextValue3" 
                         className='personalInfoTextValue' 
                         placeholder={this.profile.age} 
+                        disabled/>
+                </FlexView>
+                <FlexView className='personalInfo'> 
+                <p className='personalInfoText'>Phone Number: </p>
+                <input 
+                        type = "text"
+                        id="personalInfoTextValue" 
+                        className='personalInfoTextValue' 
+                        placeholder={this.profile.phoneNumber} 
+                        name="phoneNumber"
+                        onChange = {this.changeHandler}
                         disabled/>
                 </FlexView>
                 </FlexView>
