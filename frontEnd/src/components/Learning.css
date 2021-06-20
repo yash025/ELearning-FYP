@@ -79,6 +79,7 @@
     height: 40px;
     text-align: center;
     cursor: pointer;
+    border-radius: 15px;
 }
 .Category:hover {
     opacity: 0.8;

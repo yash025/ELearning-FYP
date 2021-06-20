@@ -38,7 +38,7 @@ export default class Learning extends Component{
     componentDidMount() {
         let email = () => tempstorage.getProfile('email');
         // let email = "";
-        let promise = getRequest("http://localhost:5000/points",email);   //return points from DB
+        let promise = getRequest("/points",email);   //return points from DB
         console.log(promise);
             promise.then(res => {
                 if(res.status === 200) {
@@ -72,7 +72,7 @@ export default class Learning extends Component{
         }
         console.log("Drawing Success points: "+ points);
         const data = { type: "drawing", points: this.state.points};
-        let promise = postRequest("http://localhost:5000/updateCompleted", data);  //set that points in table
+        let promise = postRequest("/updateCompleted", data);  //set that points in table
         console.log(promise); 
         promise.then(res => {
             if(res.status === 200) {

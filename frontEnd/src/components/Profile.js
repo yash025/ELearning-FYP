@@ -21,8 +21,8 @@ export default class Profile extends Component{
     
     componentDidMount() {
         let data = {email: tempstorage.getProfile('email')};
-        // let email = "";
-        let promise = getRequest("http://localhost:5000/profile",data);   //return profile from DB
+        console.log(data);
+        let promise = getRequest("/profile",data);   //return profile from DB
         console.log(promise);
             promise.then(res => {
                 if(res.status == 200) {
@@ -34,7 +34,7 @@ export default class Profile extends Component{
                 }
                 }).catch(res=>{
                     alert("Could not connect");
-                    router.stateService.reload();
+                    // router.stateService.reload();
                 })
     }
 
@@ -95,7 +95,7 @@ export default class Profile extends Component{
         if(tempstorage.getProfile('email') !== profileInfo['email']){
             changedProfileDetails.oldEmail = tempstorage.getProfile('email');
         }
-        let promise = postRequest("https://localhost:5000/updateProfile",profileInfo); //store name, email, password, age in DB
+        let promise = postRequest("/updateProfile",profileInfo); //store name, email, password, age in DB
             console.log(profileInfo);
             promise.then(res => {
                 if(res.status === 200) {
@@ -139,14 +139,20 @@ export default class Profile extends Component{
         }
         if(this.state.showProfile) {
             profile = (
-                <div id='profileContent'>
+                <FlexView id='profileContent'>
                     <div id="avatarDiv"> 
                     <Avatar id="avatar1" alt="Profile" src="/broken-image.jpg"></Avatar>
                     </div>
-                    <div id ="nameUnderAvatar">
-                    <p id="nameUnderAvatarText">Name: {this.profile.name}</p>
+                    <FlexView column id = "namesUnderAvatar">
+                    <div id ="nameUnderAvatar" >
+                    <p className='NameUnderAvatarText'>Name: {this.profile.name}</p>
                     </div> 
-                </div>
+                    <div id ="nameUnderAvatar" >
+                    <p className='NameUnderAvatarText'>username: {this.profile.email}</p>                  
+                    </div>
+                    </FlexView>
+                   
+                </FlexView>
             )
         }
         if(this.state.showChangeSettings) {

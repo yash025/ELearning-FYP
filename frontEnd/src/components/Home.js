@@ -25,8 +25,8 @@ export default class Home extends Component{
                 </div>
                 <div className='NavBar'> 
                     <div className='NavElem'>About</div>
-                    <div className='NavElem'>My Progress</div>
-                    <div className='NavElem' onClick={() => this.clickHandler('profile')}>Profile Settings</div>
+                    <div className='NavElem' onClick={() => this.clickHandler('myProgress')} >My Progress</div>
+                    <div className='NavElem' onClick={() => this.clickHandler('profile')} >Profile Settings</div>
                 </div>
                 <div className= 'Section' id='section1' onClick={this.learningHandler}>
                     <p className='SectionTitle'>Learning</p>

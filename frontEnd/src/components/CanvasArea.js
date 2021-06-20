@@ -47,7 +47,7 @@ const CanvasArea = props => {
   const urlConverter = () => {
     var canvas = document.getElementById("canvas");
     var dataUrl = canvas.toDataURL();
-    // console.log(dataUrl);
+    console.log(dataUrl);
     let data = {}
 
     //Learning
