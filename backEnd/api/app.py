@@ -185,19 +185,19 @@ def updateProfile():
     try:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         if("firstName" in params):
-            cursor.execute('update user set firstName = %s where email = %s', (params.get('firstName'), email, ))
+            cursor.execute('update user set firstName = %s where email = %s', (params['firstName'], email, ))
             mysql.connection.commit()
         if("lastName" in params):
-            cursor.execute('update user set lastName = %s where email = %s', (params.get('lastName'), email, ))
+            cursor.execute('update user set lastName = %s where email = %s', (params['lastName'], email, ))
             mysql.connection.commit()
         if("age" in params):
-            cursor.execute('update user set age = %s where email = %s', (params.get('age'), email, ))
+            cursor.execute('update user set age = %s where email = %s', (params['age'], email, ))
             mysql.connection.commit()
         if("phoneNumber" in params):
-            cursor.execute('update user set phoneNumber = %s where email = %s', (params.get('phoneNumber'), email, ))
+            cursor.execute('update user set phoneNumber = %s where email = %s', (params['phoneNumber'], email, ))
             mysql.connection.commit()
         if("password" in params):
-            cursor.execute('update user set password = %s where email = %s', (params.get('password'), email, ))
+            cursor.execute('update user set password = %s where email = %s', (params['password'], email, ))
             mysql.connection.commit()
         cursor.close()
         return make_response(jsonify(
