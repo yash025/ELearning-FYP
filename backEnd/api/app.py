@@ -25,12 +25,12 @@ def hello_world():
             result = "Hello World from Yashwanth"
         ), 200)
 
-@app.route('/login', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['POST'])
 @cross_origin()
 def login():
-    params = request.args
-    email = params.get("email")
-    password = params.get("password")
+    params = request.get_json()
+    email = params["email"]
+    password = params["password"]
     print(email)
     print(password)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -52,17 +52,17 @@ def login():
             message = "Successfully logged in"
         ), 200)
 
-@app.route('/register', methods = ['POST', 'GET'])
+@app.route('/register', methods = ['POST'])
 @cross_origin()
 def register():
-    params = request.args
-    email = params.get("email")
+    params = request.get_json()
+    email = params["email"]
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select Password from user where Email = %s',(email, ))
     data = cursor.fetchone()
     if not data:
         cursor.execute('insert into user values(%s, %s, %s, %s, %s, %s, %s)',
-        (email, params.get("firstName"), params.get("lastName"),params.get("age"), params.get("password"), 0, params.get("phoneNumber")))
+        (email, params["firstName"], params["lastName"],params["age"], params["password"], 0, params["phoneNumber"]))
         mysql.connection.commit()
         cursor.close
         return make_response(jsonify(
@@ -94,14 +94,14 @@ def FetchPointsForUser():
         points = data['Points']
         ), 200)
 
-@app.route('/updateCompleted', methods = ['GET', 'POST'])
+@app.route('/updateCompleted', methods = ['POST'])
 @cross_origin()
 def update_Completed():
-    params = request.args
-    email = params.get("email")
-    type = params.get("type")
-    doodleName = params.get("element")
-    print(email, type)
+    params = request.get_json()
+    email = params["email"]
+    type = params["type"]
+    doodleName = params["element"]
+    print(params)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if(type == "learning"):
         try:
@@ -113,12 +113,11 @@ def update_Completed():
             ), 200)
         except Exception as e:
             return make_response(jsonify(
-                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+                result = "ERROR {} has occured, Contact Support!".format(e)
             ), 400) 
     else:
         try:
-            doodleName = params.get("element")
-            level = params.get("level")
+            level = params["level"]
             cursor.execute('insert into playCompleted values(%s, %s)', (doodleName, email, ))
             mysql.connection.commit()
             cursor.execute('select Points from user where Email = %s', (email, ))
@@ -157,7 +156,7 @@ def fetchCompletedDoodles():
         ), 200)
     except Exception as e:
         return make_response(jsonify(
-                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+                result = "ERROR {} has occured, Contact Support!".format(e)
             ), 400)
 
 @app.route('/profile', methods = ['GET'])
@@ -177,11 +176,12 @@ def fetchProfileDetails():
                 result = "ERROR {} has occured, Contact Support!".format(e.__class__)
             ), 400)
 
-@app.route('/updateProfile', methods = ['GET', 'POST'])
+@app.route('/updateProfile', methods = ['POST'])
 @cross_origin()
 def updateProfile():
-    params = request.args
-    email = params.get("email")
+    params = request.get_json()
+    email = params['email']
+    print(params)
     try:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         if("firstName" in params):
@@ -205,7 +205,7 @@ def updateProfile():
         ), 200)
     except Exception as e:
         return make_response(jsonify(
-                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+                result = "ERROR {} has occured, Contact Support!".format(e)
             ), 400)
 
 @app.route('/fetchRanks', methods = ['GET'])
@@ -230,9 +230,8 @@ def fetchRanks():
         ), 200)
     except Exception as e:
         return make_response(jsonify(
-                result = "ERROR {} has occured, Contact Support!".format(e.__class__)
+                result = "ERROR {} has occured, Contact Support!".format(e)
             ), 400)
-
 
 @app.route('/canvas', methods = ['GET'])
 @cross_origin()
@@ -317,6 +316,7 @@ def doodleRecognition():
             return make_response(jsonify(
                     result = "Not Correct"
                 ), 400)
+
 
 if __name__ == '__main__':
     app.run(host = "localhost", port = 5000, debug = True)
