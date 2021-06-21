@@ -6,6 +6,8 @@ import {getRequest} from "../services/httpService";
 import axios from "axios";
 import { tempstorage } from '../services/TempStorage';
 const apiURL = "http://localhost:5000";
+const baseURL = "https://6e35ab3acc48.ngrok.io";
+
 const headers = { "content-type": "application/json" };
 
 
@@ -27,6 +29,7 @@ export default class Login extends Component{
     }
 
     submitHandler = (event) => {
+        event.preventDefault();
         console.log("submitted");
         if( this.state.email===''||this.state.email===undefined){
             document.getElementById("E1").style.display = 'block';
@@ -34,14 +37,13 @@ export default class Login extends Component{
         }
         else {
             const userinfo = this.state;
-            axios
-            .get(apiURL + '/login', { params : { email: this.state.email, password: this.state.password} }, headers)
-                .then((response) => {
+            let promise = getRequest('/login',  userinfo);
+                promise.then(response => {
                     console.log(response.data)
                     if(response.status >= 200 && response.status < 300) {
                         console.log(response.status)
                         alert("Successfully logged in.");
-                        tempstorage.setProfile({email: 'userinfo.email'});
+                        tempstorage.setProfile({email: userinfo.email});
                         router.stateService.go('home');
                     }
                     else {

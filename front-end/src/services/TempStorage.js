@@ -15,7 +15,7 @@ class TempStorage {
         if(key!== undefined) {
             return this.profile[key]||null;
         }
-        return this.profile;
+        return Object.assign({}, this.profile);
     };
 
     setProfile = (newProfile) => {

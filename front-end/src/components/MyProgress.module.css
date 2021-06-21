@@ -1,0 +1,76 @@
+#progressHeader {
+    margin: auto;
+    font-family:serif;
+    font-size: 25px;
+    color: black;
+}
+#MP{
+    background-color:rgba(228, 221, 221, 0.836);
+    height: 100%;
+    width: 100%;
+    background-image: url('../resources/images/white.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#myProgressBar {
+    background-color:rgba(128, 128, 128, 0.315);
+    width: 98%;
+    margin:10px 15px 10px 15px;
+    border-radius: 20px;
+}
+#progressContent {
+    height: inherit;
+}
+
+#progressInfo {
+    width: 30%;
+
+}
+
+#avatarAndDetails {
+    height:25%;
+    margin-top: 10%;
+}
+
+#progressAvatar {
+    margin: auto;
+    height: 60%; 
+    width: 30%;
+}
+
+#progressName {
+    color: #550867; 
+    margin:auto; 
+    font-family: fantasy;
+}
+
+.PointsAndRank {
+    color: #b022d2; 
+    margin: 10% auto 5% auto; 
+    font-family: fantasy;
+}
+#rank {
+    margin: 5% auto 10% auto;
+}
+
+.ProgressButton1 {
+    width: 80%; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 5%; 
+    height: 50px; 
+    background-color: lightcoral;
+    color:#e4b8b8;
+}
+#progressButton2 {
+    margin-top: 10%;
+}
+#progressBarAndLeaderboard{
+    width:100%;
+}
+
+#progressContent-BarsDiv {
+    width: 70%;
+}
+

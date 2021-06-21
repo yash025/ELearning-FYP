@@ -4,6 +4,7 @@ import { router } from "../services/router";
 import './Register.css'; 
 import axios from "axios";
 import { getRequest } from '../services/httpService';
+import { RegisteredHook } from '@uirouter/react';
 
 const apiURL = "http://localhost:5000";
 const headers = { "content-type": "application/json" };
@@ -31,6 +32,7 @@ export default class Register extends Component{
     }
 
     submitHandler = (event) => {
+        event.preventDefault();
         console.log("submitted");
         var flag=false;
         if( this.state.firstName===''||this.state.firstName===undefined){
@@ -86,16 +88,16 @@ export default class Register extends Component{
             let promise = getRequest("/register",userinfo); //store name, email, password, age in DB
             console.log(userinfo);
             promise.then(res => {
-                if(res.status === 200) {
+                if(res.status === 200) { 
                     alert("Successfully registered");
-                    router.stateservice.go('login');
+                    router.stateService.go('login'); 
                 } else {
                     alert("Could not register, please try again.");
-                    router.stateService.reload();
+                    // router.stateService.reload();
                 }
                 }).catch(res=>{
-                    alert("Could not connect.");
-                    router.stateService.reload();
+                    alert("Could not connect. register"); 
+                    // router.stateService.reload();
                 })
         }
         

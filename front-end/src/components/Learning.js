@@ -29,7 +29,7 @@ export default class Learning extends Component{
     }
 
     componentDidMount() {
-        let email = tempstorage.getProfile(email);
+        let email = tempstorage.getProfile('email');
         let promise = getRequest("/completedList",{email: email});
         console.log(promise);
             promise.then(res => {
@@ -73,7 +73,7 @@ export default class Learning extends Component{
         //remove later start
         // this.setState({showCanvas: false, selectedCategory: cat});
         //remove later end
-        let email = tempstorage.getProfile(email);
+        let email = tempstorage.getProfile('email');
         const data = { email: email, type: "learning", element: element, category: cat};
         //Uncomment call later start
         let response = postRequest("/updateCompleted", data);  //set that element as completed in table and return status + completed list
