@@ -37,7 +37,7 @@ export default class Login extends Component{
         }
         else {
             const userinfo = this.state;
-            let promise = getRequest('/login',  userinfo);
+            let promise = postRequest('/login',  userinfo);
                 promise.then(response => {
                     console.log(response.data)
                     if(response.status >= 200 && response.status < 300) {
