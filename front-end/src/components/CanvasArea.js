@@ -68,7 +68,7 @@ const CanvasArea = props => {
     }
     console.log(data);
 
-    let promise = postRequest("http://localhost:5000/canvas",data);
+    let promise = postRequest("/canvas",data);
     console.log(promise);
     promise.then(res => {
     if(res.status === 200) {
@@ -95,7 +95,7 @@ const CanvasArea = props => {
       }
     }).catch(res=>{
           alert("Could not connect.");
-          router.stateService.reload();
+          
       })
       
   }
