@@ -85,23 +85,32 @@
     position: relative; 
     background: white; 
     width: 70%; 
-    margin: 2%;
-    top: 10%
+    /* margin: 2%; */
+    /* top: 10%; */
+    margin-left: 2%;
+    background-color: aqua;
 }
 
 #stepper2 {
     position: relative; 
     background: white; 
     width: 70%; 
-    margin: 2%;
-    top: 10%;
+    /* margin: 1%; */
+    /* top: 10%; */
+    margin-left: 2%;
+    background-color: aqua;
+
 }
 
 #stepper3 {
     position: relative; 
     background: white; 
     width: 70%; 
-    margin: 2%;
-    top: 10%
+    /* margin: 2%; */
+    /* top: 10%; */
+    margin-left: 2%;
+    background-color: aqua;
+    border-radius: 15px;
+
 }
 

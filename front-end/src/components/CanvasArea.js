@@ -15,7 +15,7 @@ const CanvasArea = props => {
     canvas.style.width = '100%';//window.innerWidth /2;
     canvas.style.height = '100%'; //window.innerHeight /2;
     canvas.width = canvas.offsetWidth; //'${window.innerWidth/2}px';
-    canvas.height =  canvas.offsetHeight;//'${window.innerHeight/2}px';
+    canvas.height = canvas.offsetHeight;//'${window.innerHeight/2}px';
     
     const context = canvas.getContext("2d")
     // context.scale(2,2)

@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Flexview from 'react-flexview';
 import CustomizedTables from './Leaderboard';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,6 +10,8 @@ import Divider from '@material-ui/core/Divider';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import { blue, red } from '@material-ui/core/colors';
 import styles from './MyProgress.module.css';
+import { getRequest } from '../services/httpService';
+import { tempstorage } from '../services/TempStorage';
 
 const useStyles = makeStyles({
     root: {
@@ -22,8 +24,6 @@ const useStyles = makeStyles({
         width: '100%'
     }
   });
-
-
 
   const theme1 = createMuiTheme({
     overrides: {
@@ -71,7 +71,7 @@ const useStyles = makeStyles({
     overrides: {
         MuiLinearProgress: {
             root: {
-                height: '70px'
+                height: '30px'
             },
             barColorPrimary: {
                 backgroundColor: red[600]
@@ -91,6 +91,70 @@ const useStyles = makeStyles({
 export default function MyProgress() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(3);
+    const [points, setPoints] = React.useState(0);
+    const [userRank, setUserRank] = React.useState(0);
+    const [name,setName] = React.useState("");
+    const [digitsTotal, setDigitsTotal] = React.useState(0);
+    const [digitsCompleted, setDigitsCompleted] = React.useState(0);
+    const [alphabetsTotal, setAlphabetsTotal] = React.useState(0);
+    const [alphabetsCompleted, setAlphabetsCompleted] = React.useState(0);
+    const [objectsTotal, setObjectsTotal] = React.useState(0);
+    const [objectsCompleted, setObjectsCompleted] = React.useState(0);
+    const [easyTotal, setEasyTotal] = React.useState(0);
+    const [easyCompleted, setEasyCompleted] = React.useState(0);
+    const [mediumTotal, setMediumTotal] = React.useState(0);
+    const [mediumCompleted, setMediumCompleted] = React.useState(0);
+    const [hardTotal, setHardTotal] = React.useState(0);
+    const [hardCompleted, setHardCompleted] = React.useState(0);
+
+    useEffect((event) => {
+        event.preventDefault();
+        let email = tempstorage.getProfile('email');
+        let promise = getRequest('/fetchProgressInfo',{email: email});
+        promise.then(res => {
+            if(res.status === 200) {
+                console.log("ProgressInfoRecieved");
+                console.log(res.data);
+                    if(res.data.points)
+                        setPoints(res.data.points);
+                    if(res.data.userRank)
+                        setUserRank(res.data.userRank);
+                    if(res.data.firstName && res.data.lastName)
+                        setName(res.data.firstName + " " + res.data.lastName);
+                    if(res.data.digitsTotal)
+                        setDigitsTotal(res.data.digitsTotal);
+                    if(res.data.digitsCompleted)
+                        setDigitsCompleted(res.data.digitsCompleted);
+                    if(res.data.alphabetsTotal)
+                        setAlphabetsTotal(res.data.alphabetsTotal);
+                    if(res.data.alphabetsCompleted)
+                        setAlphabetsCompleted(res.data.alphabetsCompleted);
+                    if(res.data.objectsTotal)
+                        setObjectsTotal(res.data.objectsTotal);
+                    if(res.data.setObjectsCompleted)
+                        setObjectsCompleted(res.data.setObjectsCompleted);
+                    if(res.data.easyTotal)
+                        setEasyTotal(res.data.easyTotal);
+                    if(res.data.easyCompleted)
+                        setEasyCompleted(res.data.easyCompleted);
+                    if(res.data.mediumTotal)
+                        setMediumTotal(res.data.mediumTotal);
+                    if(res.data.mediumCompleted)
+                        setMediumCompleted(res.data.mediumCompleted);
+                    if(res.data.hardTotal)
+                        setHardTotal(res.data.hardTotal);
+                    if(res.data.hardCompleted)
+                        setHardCompleted(res.data.hardCompleted);
+                
+            } else {
+                alert("Progress not recieved");
+                // router.stateService.reload();
+              }
+            }).catch(res=>{
+                  alert("Could not connect.");
+                  
+              })
+      },[])
 
     const learningHandler = () => {
         router.stateService.go('learning');
@@ -127,13 +191,13 @@ export default function MyProgress() {
                         <Flexview id="avatarAndDetails" column>
                             <Avatar id="progressAvatar" alt="Profpic" src="/broken-image.jpg">
                             </Avatar>
-                            <h2 id="progressName">Paavana M Kumar</h2>
+                            <h2 id="progressName">{name}</h2>
                         </Flexview>
                         <h2 className="PointsAndRank" >
-                            POINTS SCORED: {}
+                            POINTS SCORED: {points}
                         </h2>
                         <h2 className="PointsAndRank" id="rank">
-                            RANK: 5
+                            RANK: {userRank}
                         </h2>
                         <Button id="progressButton1"
                         onClick={learningHandler}>
@@ -150,15 +214,18 @@ export default function MyProgress() {
                     <Flexview id="progressBarAndLeaderboard">
                         <Flexview id="progressContent-BarsDiv" column >
                             <ThemeProvider theme={theme1}>
-                                <MobileStepper id="stepper1" variant="progress" steps={11} activeStep={9}/>
+                                <h2>Digits ({digitsCompleted}/{digitsTotal})</h2>
+                                <MobileStepper id="stepper1" variant="progress" steps={digitsTotal+1} activeStep={digitsCompleted}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme2}>
+                                <h2>Alphabets ({alphabetsCompleted}/{alphabetsTotal})</h2>
                                 <MobileStepper id = "stepper2" 
-                                variant="progress" steps={27} activeStep={5}/>
+                                variant="progress" steps={alphabetsTotal+1} activeStep={alphabetsCompleted}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme3}>
+                                <h2>Objects ({objectsCompleted}/{objectsTotal})</h2>
                                 <MobileStepper id = "stepper3" 
-                                variant="progress" steps={15} activeStep={5}/>
+                                variant="progress" steps={objectsTotal+1} activeStep={objectsCompleted}/>
                             </ThemeProvider>
                         </Flexview>
                         <Flexview style={{width: '30%', marginTop: '5%', maxHeight: '550px', overflow: 'scroll'}}>
