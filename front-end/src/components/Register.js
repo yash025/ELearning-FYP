@@ -3,7 +3,7 @@ import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Register.css'; 
 import axios from "axios";
-import { getRequest } from '../services/httpService';
+import { postRequest, getRequest } from '../services/httpService';
 import { RegisteredHook } from '@uirouter/react';
 
 const apiURL = "http://localhost:5000";

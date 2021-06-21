@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Login1.css'; 
-import {getRequest} from "../services/httpService";
+import {getRequest, postRequest} from "../services/httpService";
 import axios from "axios";
 import { tempstorage } from '../services/TempStorage';
 const apiURL = "http://localhost:5000";

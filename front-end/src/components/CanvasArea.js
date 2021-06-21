@@ -1,7 +1,7 @@
 // import { green } from '@material-ui/core/colors';
 // import { prop } from '@uirouter/core';
 import React, {  useEffect, useState, useRef } from 'react';
-import { postRequest } from '../services/httpService';
+import { getRequest, postRequest } from '../services/httpService';
 import './CanvasArea.css';
 import {router} from "../services/router";
 
