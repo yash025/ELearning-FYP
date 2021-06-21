@@ -68,7 +68,7 @@ const CanvasArea = props => {
     }
     console.log(data);
 
-    let promise = postRequest("/canvas",data);
+    let promise = getRequest("/canvas",data);
     console.log(promise);
     promise.then(res => {
     if(res.status === 200) {

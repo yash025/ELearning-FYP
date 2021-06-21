@@ -135,11 +135,11 @@ export default function MyProgress() {
                         <h2 className="PointsAndRank" id="rank">
                             RANK: 5
                         </h2>
-                        <Button className="ProgressButton1"
+                        <Button id="progressButton1"
                         onClick={learningHandler}>
                             Go to Learning
                         </Button>
-                        <Button className="ProgressButton1" id="progressButton2"
+                        <Button id="progressButton2"
                         onClick={drawingHandler}>
                             Go to Drawing
                         </Button>
@@ -150,14 +150,14 @@ export default function MyProgress() {
                     <Flexview id="progressBarAndLeaderboard">
                         <Flexview id="progressContent-BarsDiv" column >
                             <ThemeProvider theme={theme1}>
-                                <MobileStepper style={{position:'relative', background: 'white', width: '70%', margin: '2%',top: '10%'}} variant="progress" steps={11} activeStep={9}/>
+                                <MobileStepper id="stepper1" variant="progress" steps={11} activeStep={9}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme2}>
-                                <MobileStepper style={{position:'relative', background: 'white', width: '70%', margin: '2%',top: '10%'}}
+                                <MobileStepper id = "stepper2" 
                                 variant="progress" steps={27} activeStep={5}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme3}>
-                                <MobileStepper style={{position:'relative', background: 'white', width: '70%', margin: '2%',top: '10%'}}
+                                <MobileStepper id = "stepper3" 
                                 variant="progress" steps={15} activeStep={5}/>
                             </ThemeProvider>
                         </Flexview>

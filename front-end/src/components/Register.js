@@ -85,7 +85,7 @@ export default class Register extends Component{
             //         console.log(error);
             //     });
 
-            let promise = getRequest("/register",userinfo); //store name, email, password, age in DB
+            let promise = postRequest("/register",userinfo); //store name, email, password, age in DB
             console.log(userinfo);
             promise.then(res => {
                 if(res.status === 200) { 
