@@ -1,6 +1,6 @@
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, json, request, jsonify, make_response
 from flask_cors import cross_origin
 import base64
 from keras.models import load_model
@@ -216,17 +216,24 @@ def fetchRanks():
     email = params.get('email')
     try:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select email, firstName, lastName from user order by Points desc')
+        cursor.execute('select Email as email, FirstName as firstName, LastName as lastName, Points as points from user order by Points desc')
         rankList = cursor.fetchall()
-        userRank = 1;
+        userRank = 0
+        prev = -1
+        current_user_rank = 0
         for i in rankList:
+            if(prev != i['points']):
+                userRank = userRank + 1
             if(i['email'] == email):
-                break
-            userRank = userRank + 1
-
+                current_user_rank = userRank
+            prev = i['points']
+            i['rank'] = userRank
+        cursor.execute('select Email as email, FirstName as firstName, LastName as lastName, Points as points from user where Email = %s', (email, ))
+        data = cursor.fetchone()
+        data['rank'] = current_user_rank
         cursor.close()
         return make_response(jsonify(
-            userRank = userRank, 
+            currentUserDetails = data, 
             ranks = rankList
         ), 200)
     except Exception as e:
@@ -324,7 +331,7 @@ def fetchProgress():
     email = request.args.get("email")
     resp = requests.get("http://localhost:5000/fetchRanks", params = {'email': email}, headers={"content-type": "application/json"})
     temp = resp.json()
-    rank = temp.get('userRank')
+    rank = temp.get('currentUserDetails').get('rank')
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select FirstName as firstName, LastName as lastName, Points as points from user where Email = %s',(email, ))
     userInfo = cursor.fetchall()
