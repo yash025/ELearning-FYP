@@ -6,6 +6,7 @@ import base64
 from keras.models import load_model
 import cv2
 import numpy as np
+import requests
 
 
 app = Flask(__name__)
@@ -316,6 +317,63 @@ def doodleRecognition():
             return make_response(jsonify(
                     result = "Not Correct"
                 ), 400)
+
+@app.route('/fetchProgressInfo', methods = ['GET'])
+@cross_origin()
+def fetchProgress():
+    email = request.args.get("email")
+    resp = requests.get("http://localhost:5000/fetchRanks", params = {'email': email}, headers={"content-type": "application/json"})
+    temp = resp.json()
+    rank = temp.get('userRank')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('select FirstName as firstName, LastName as lastName, Points as points from user where Email = %s',(email, ))
+    userInfo = cursor.fetchall()
+    result = {}
+    for i in userInfo:
+        result['firstName'] = i['firstName']
+        result['lastName'] = i['lastName']
+        result['points'] = i['points']
+    result['userRank'] = rank
+    cursor.execute('select count(isDigit) as digitsTotal from learndoodles where isDigit = 1')
+    data = cursor.fetchone()
+    result['digitsTotal'] = data['digitsTotal']
+    cursor.execute('select count(isAlphabet) as alphabetsTotal from learndoodles where isAlphabet = 1')
+    data = cursor.fetchone()
+    result['alphabetsTotal'] = data['alphabetsTotal']
+    print(data)
+    cursor.execute('select count(isDoodle) as objectsTotal from learndoodles where isDoodle = 1')
+    data = cursor.fetchone()
+    result['objectsTotal'] = data['objectsTotal']
+    cursor.execute('select count(*) as digitsCompleted from learnCompleted C, learndoodles L where C.learnDoodleName=L.learnDoodleName and L.isDigit = 1 and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['digitsCompleted'] = data['digitsCompleted']
+    cursor.execute('select count(*) as alphabetsCompleted from learnCompleted C, learndoodles L where C.learnDoodleName=L.learnDoodleName and L.isAlphabet = 1 and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['alphabetsCompleted'] = data['alphabetsCompleted']
+    cursor.execute('select count(*) as setObjectsCompleted from learnCompleted C, learndoodles L where C.learnDoodleName=L.learnDoodleName and L.isDoodle = 1 and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['setObjectsCompleted'] = data['setObjectsCompleted']
+    cursor.execute('select count(playDoodleName) as easyTotal from playdoodles where level = "easy"')
+    data = cursor.fetchone()
+    result['easyTotal'] = data['easyTotal']
+    cursor.execute('select count(playDoodleName) as mediumTotal from playdoodles where level = "medium"')
+    data = cursor.fetchone()
+    result['mediumTotal'] = data['mediumTotal']
+    cursor.execute('select count(playDoodleName) as hardTotal from playdoodles where level = "hard"')
+    data = cursor.fetchone()
+    result['hardTotal'] = data['hardTotal']
+    cursor.execute('select count(C.playDoodleName) as easyCompleted from playCompleted C, playdoodles P where P.playDoodleName = C.playDoodleName and P.level = "easy" and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['easyCompleted'] = data['easyCompleted']
+    cursor.execute('select count(C.playDoodleName) as mediumCompleted from playCompleted C, playdoodles P where P.playDoodleName = C.playDoodleName and P.level = "medium" and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['mediumCompleted'] = data['mediumCompleted']
+    cursor.execute('select count(C.playDoodleName) as hardCompleted from playCompleted C, playdoodles P where P.playDoodleName = C.playDoodleName and P.level = "hard" and C.email = %s', (email, ))
+    data = cursor.fetchone()
+    result['hardCompleted'] = data['hardCompleted']
+    return make_response(
+        jsonify(result), 
+        200)
 
 
 if __name__ == '__main__':
