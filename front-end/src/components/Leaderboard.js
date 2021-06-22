@@ -28,8 +28,8 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-// function createData(rank, name, points) {
-//   return { rank, name, points };
+// function createData(row) {
+//   return { row.userRank, row.firstName + row.lastName, row.points };
 // }
 
 // const rows = [
@@ -56,7 +56,6 @@ const useStyles = makeStyles({
 export default function CustomizedTables() {
   const classes = useStyles();
   const [rows,setRows] = React.useState([]);
-
   useEffect(() => {
     let email = tempstorage.getProfile('email');
     let promise = getRequest('/fetchRanks',{email: email});
@@ -90,9 +89,9 @@ export default function CustomizedTables() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.rank}>
               <StyledTableCell >{row.rank}</StyledTableCell>
-              <StyledTableCell >{row.name}</StyledTableCell>
+              <StyledTableCell >{row.firstName + row.lastName}</StyledTableCell>
               <StyledTableCell >{row.points}</StyledTableCell>
             </StyledTableRow>
           ))}

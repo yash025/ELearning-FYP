@@ -8,23 +8,33 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import { blue, red } from '@material-ui/core/colors';
-import styles from './MyProgress.module.css';
+// import { red } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
+import  './MyProgress.css';
 import { getRequest } from '../services/httpService';
 import { tempstorage } from '../services/TempStorage';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+// const useStyles = makeStyles({
+//     root: {
+//       flexGrow: 1,
+//     },
+//     '.MuiLinearProgress-root': {
+//         height: '70px'
+//     },
+//     progress: {
+//         width: '50%'
+//     }
+//   });
 
-const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      },
     },
-    '.MuiLinearProgress-root': {
-        height: '50px'
-    },
-    progress: {
-        width: '100%'
-    }
-  });
-
+  }));
   const theme1 = createMuiTheme({
     overrides: {
         MuiLinearProgress: {
@@ -32,10 +42,10 @@ const useStyles = makeStyles({
                 height: '70px'
             },
             barColorPrimary: {
-                backgroundColor: red[600]
+                backgroundColor: '#1b88c1'//'#d8190bcc'
             },
             colorPrimary: {
-                backgroundColor: red[100]
+                backgroundColor: '#7eb6d3'//'#f4433652'
             }
       },
       MuiMobileStepper: {
@@ -53,10 +63,10 @@ const useStyles = makeStyles({
                 height: '70px'
             },
             barColorPrimary: {
-                backgroundColor: red[600]
+                backgroundColor: '#1b88c1'
             },
             colorPrimary: {
-                backgroundColor: red[100]
+                backgroundColor: '#7eb6d3'
             }
       },
       MuiMobileStepper: {
@@ -74,10 +84,10 @@ const useStyles = makeStyles({
                 height: '30px'
             },
             barColorPrimary: {
-                backgroundColor: red[600]
+                backgroundColor: '#1b88c1'//'#dab327'
             }, 
             colorPrimary: {
-                backgroundColor: red[100]
+                backgroundColor: '#7eb6d3'//'#dab327a1'
             }
       },
       MuiMobileStepper: {
@@ -100,15 +110,15 @@ export default function MyProgress() {
     const [alphabetsCompleted, setAlphabetsCompleted] = React.useState(0);
     const [objectsTotal, setObjectsTotal] = React.useState(0);
     const [objectsCompleted, setObjectsCompleted] = React.useState(0);
-    const [easyTotal, setEasyTotal] = React.useState(0);
-    const [easyCompleted, setEasyCompleted] = React.useState(0);
+    const [easyTotal, setEasyTotal] = React.useState(10);
+    const [easyCompleted, setEasyCompleted] = React.useState(5);
     const [mediumTotal, setMediumTotal] = React.useState(0);
     const [mediumCompleted, setMediumCompleted] = React.useState(0);
     const [hardTotal, setHardTotal] = React.useState(0);
     const [hardCompleted, setHardCompleted] = React.useState(0);
 
     useEffect((event) => {
-        event.preventDefault();
+        // event.preventDefault();
         let email = tempstorage.getProfile('email');
         let promise = getRequest('/fetchProgressInfo',{email: email});
         promise.then(res => {
@@ -184,7 +194,9 @@ export default function MyProgress() {
                          <p id = "goBack">Go Back</p>
                     </div>
                     <p id="progressHeader">My Progress</p>
-                    <Avatar id="avatar" alt="Profile" src="/broken-image.jpg" ></Avatar>
+                    <div id="backButton" onClick={tempstorage.logout}> 
+                         <p id = "progressLogout" >Logout</p>
+                    </div>
                 </Flexview>
                 <Flexview id="progressContent">
                     <Flexview column id="progressInfo">
@@ -214,22 +226,37 @@ export default function MyProgress() {
                     <Flexview id="progressBarAndLeaderboard">
                         <Flexview id="progressContent-BarsDiv" column >
                             <ThemeProvider theme={theme1}>
-                                <h2>Digits ({digitsCompleted}/{digitsTotal})</h2>
+                                <h2 className="CategoryNames">Digits ({digitsCompleted}/{digitsTotal})</h2>
                                 <MobileStepper id="stepper1" variant="progress" steps={digitsTotal+1} activeStep={digitsCompleted}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme2}>
-                                <h2>Alphabets ({alphabetsCompleted}/{alphabetsTotal})</h2>
+                                <h2 className="CategoryNames">Alphabets ({alphabetsCompleted}/{alphabetsTotal})</h2>
                                 <MobileStepper id = "stepper2" 
                                 variant="progress" steps={alphabetsTotal+1} activeStep={alphabetsCompleted}/>
                             </ThemeProvider>
                             <ThemeProvider theme={theme3}>
-                                <h2>Objects ({objectsCompleted}/{objectsTotal})</h2>
+                                <h2 className="CategoryNames">Objects ({objectsCompleted}/{objectsTotal})</h2>
                                 <MobileStepper id = "stepper3" 
                                 variant="progress" steps={objectsTotal+1} activeStep={objectsCompleted}/>
                             </ThemeProvider>
+                            <Flexview >
+                                <div className="circularBarDiv">
+                                    <h2 className="LevelNames">Easy</h2>
+                                    <CircularProgressbar value={easyCompleted/easyTotal*100} text={`${easyCompleted/easyTotal*100}%`} />;
+                                </div>
+                                <div className="circularBarDiv">
+                                    <h2 className="LevelNames">Medium</h2>
+                                    <CircularProgressbar value={mediumCompleted/mediumTotal*100} text={`${mediumCompleted/mediumTotal*100}%`} />;
+                                </div>
+                                <div className="circularBarDiv">
+                                    <h2 className="LevelNames">Hard</h2>
+                                    <CircularProgressbar value={hardCompleted/hardTotal*100} text={`${hardCompleted/hardTotal*100}%`} />;
+                                </div>
+                            </Flexview>
                         </Flexview>
-                        <Flexview style={{width: '30%', marginTop: '5%', maxHeight: '550px', overflow: 'scroll'}}>
-                        <CustomizedTables/>
+                        <Flexview style={{width: '30%', marginTop: '1%', maxHeight: '600px', overflowY  : 'scroll'}} column>
+                            <h2 className="LeaderBoard">Leader Board</h2>
+                        <CustomizedTables />
                         </Flexview>
                     </Flexview>
                 </Flexview>

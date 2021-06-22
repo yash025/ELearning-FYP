@@ -1,3 +1,5 @@
+import {router} from "../services/router";
+
 class TempStorage {
     constructor(props) {
         this.profile= {
@@ -22,7 +24,14 @@ class TempStorage {
         for (let key in newProfile) {
                this.profile[key] = newProfile[key];
           }
-        }
+    }
+
+    logout = () => {
+        for (let key in this.profile) {
+            this.profile[key] = '';
+       }
+       router.stateService.go('login');
+    }
 }
 
 export const tempstorage = new TempStorage();

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import FlexView from "react-flexview";
 import { router } from "../services/router";
 import './Home.css';
+import { tempstorage } from '../services/TempStorage';
 export default class Home extends Component{
 
 
@@ -21,7 +22,7 @@ export default class Home extends Component{
             <FlexView id="H" column >
                 <div className='HomeBar'>
                     <p className="HomeTitle">HOME PAGE</p>
-                    <p onClick={() => this.clickHandler('login')}className="Logout">Logout</p>
+                    <p onClick={tempstorage.logout}className="Logout">Logout</p>
                 </div>
                 <div className='NavBar'> 
                     <div className='NavElem'>About</div>
