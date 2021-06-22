@@ -110,8 +110,8 @@ export default function MyProgress() {
     const [alphabetsCompleted, setAlphabetsCompleted] = React.useState(0);
     const [objectsTotal, setObjectsTotal] = React.useState(0);
     const [objectsCompleted, setObjectsCompleted] = React.useState(0);
-    const [easyTotal, setEasyTotal] = React.useState(10);
-    const [easyCompleted, setEasyCompleted] = React.useState(5);
+    const [easyTotal, setEasyTotal] = React.useState(0);
+    const [easyCompleted, setEasyCompleted] = React.useState(0);
     const [mediumTotal, setMediumTotal] = React.useState(0);
     const [mediumCompleted, setMediumCompleted] = React.useState(0);
     const [hardTotal, setHardTotal] = React.useState(0);
@@ -254,7 +254,7 @@ export default function MyProgress() {
                                 </div>
                             </Flexview>
                         </Flexview>
-                        <Flexview style={{width: '30%', marginTop: '1%', maxHeight: '600px', overflowY  : 'scroll'}} column>
+                        <Flexview style={{width: '50%', marginTop: '1%', maxHeight: '600px', overflowY  : 'scroll'}} column>
                             <h2 className="LeaderBoard">Leader Board</h2>
                         <CustomizedTables />
                         </Flexview>

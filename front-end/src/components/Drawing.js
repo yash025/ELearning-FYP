@@ -20,7 +20,7 @@ export default class Learning extends Component{
                    'K','L','M','N','O','P','Q','R','S','T',
                    'U','V','W','X','Y','Z','apple','arm','bread',
                     'baseball','blackberry','bat','banana','bandage',
-                    'carrot','candle','circle','cloud','carrot','candle',
+                    'carrot','circle','cloud','carrot','candle',
                     'circle','cloud','donut','door','diamond','envelope',
                     'eraser','feather','hat','hexagon','key','line','leaf',
                     'octagon','potato'],
@@ -71,7 +71,7 @@ export default class Learning extends Component{
         //     console.log(points);
         // }
         // console.log("Drawing Success points: "+ points);
-        let email = () => tempstorage.getProfile('email');
+        let email =  tempstorage.getProfile('email');
         let chosen = this.state.chosen;
         const data = { email: email, type: "drawing", level: level, element: chosen};
         let promise = postRequest("/updateCompleted", data);  //set that points in table

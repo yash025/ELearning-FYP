@@ -14,6 +14,7 @@ export default class Home extends Component{
         router.stateService.go('drawing');
     }
     clickHandler = (pageName) => {
+        // event.preventdefault();
         router.stateService.go(pageName);
     }
     render(){
@@ -34,7 +35,7 @@ export default class Home extends Component{
                     </div>
                 <div className= 'Section' onClick={this.drawingHandler}>
                     <p className='SectionTitle'>Drawing</p>
-                    </div>
+                </div>
             </FlexView>
             </div>
         );

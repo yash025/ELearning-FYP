@@ -68,6 +68,7 @@ export default class Login extends Component{
             <FlexView id="E" column >
                 <form onSubmit={this.submitHandler}>
                         {/* <label style={{color:'black'}}>Username</label> */}
+                        <h2>Login</h2>
                     <input 
                         className="InputBlock"
                         type="email"
@@ -97,7 +98,7 @@ export default class Login extends Component{
                         LOGIN
                     </button>
                 </form>
-                <p onClick={this.registerHandler}>Register here</p>
+                <p id="registerHere" onClick={this.registerHandler}>Register here</p>
             </FlexView>
             </div>
         );

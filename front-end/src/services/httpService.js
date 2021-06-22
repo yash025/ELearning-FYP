@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://90e66bd9b2b9.ngrok.io";
+const baseURL = "https://cb193a6fe8dd.ngrok.io";
 // const baseURL ="http://localhost:5000";
 const headers = { "content-type": "application/json" };
 // export function setToken(token) {
