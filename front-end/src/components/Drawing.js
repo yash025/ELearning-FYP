@@ -72,7 +72,8 @@ export default class Learning extends Component{
         // }
         // console.log("Drawing Success points: "+ points);
         let email = () => tempstorage.getProfile('email');
-        const data = { email: email, type: "drawing", level: level};
+        let chosen = this.state.chosen;
+        const data = { email: email, type: "drawing", level: level, element: chosen};
         let promise = postRequest("/updateCompleted", data);  //set that points in table
         console.log(promise); 
         promise.then(res => {

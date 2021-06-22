@@ -55,7 +55,7 @@ export default class Profile extends Component{
 
     showDiv = (option) => {
         if(option === "Logout") {
-            router.stateService.go('login')
+            tempstorage.logout();
             return;
         }
         this.setAllContentToFalse();

@@ -87,8 +87,9 @@
     width: 70%; 
     /* margin: 2%; */
     /* top: 10%; */
-    margin-left: 2%;
-    background-color: aqua;
+    margin-left: 10%;
+    /* background-color: aqua; */
+
 }
 
 #stepper2 {
@@ -97,8 +98,8 @@
     width: 70%; 
     /* margin: 1%; */
     /* top: 10%; */
-    margin-left: 2%;
-    background-color: aqua;
+    margin-left: 10%;
+    /* background-color: aqua; */
 
 }
 
@@ -108,9 +109,37 @@
     width: 70%; 
     /* margin: 2%; */
     /* top: 10%; */
-    margin-left: 2%;
-    background-color: aqua;
+    margin-left: 10%;
+    /* background-color: aqua; */
     border-radius: 15px;
-
 }
 
+.circularBarDiv {
+    width: 150px;
+    height: 150px;
+    margin: 7% auto 3% auto;
+}
+
+.CategoryNames {
+    margin-left: 10%;
+    font-family:serif;
+    width: fit-content;
+    color: black;
+}
+
+.LevelNames{
+    margin-left:25%;
+    font-family:serif;
+    width: min-content;
+    margin: 15% auto 13% auto;
+}
+
+.LeaderBoard {
+    margin-left: 20%;
+    width: fit-content;
+}
+#progressLogout {
+    width: fit-content;
+    margin: 12% auto;
+    color: rgba(255, 248, 220, 0.74);
+}
