@@ -74,13 +74,18 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row) => {if(row.email=== userRow.email)return (<StyledTableRow style = {{backgroundColor: '#dbe6de', border: 'solid 2px green', fontWeight: 'bold'}}key={userRow.rank}>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.rank}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.points}</StyledTableCell>
+          </StyledTableRow>)
+          return (
             <StyledTableRow key={row.rank}>
               <StyledTableCell >{row.rank}</StyledTableCell>
               <StyledTableCell >{row.firstName +" "+ row.lastName}</StyledTableCell>
               <StyledTableCell >{row.points}</StyledTableCell>
             </StyledTableRow>
-          ))}
+          )})}
           <StyledTableRow style = {{backgroundColor: '#dbe6de', border: 'solid 2px green', fontWeight: 'bold'}}key={userRow.rank}>
              <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.rank}</StyledTableCell>
              <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>

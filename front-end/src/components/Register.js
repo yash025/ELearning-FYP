@@ -125,14 +125,14 @@ export default class Register extends Component{
                                     border: 'solid 2px white',
                                     borderRadius: '40px',
                                     backgroundColor: '#f5f5f54d',
-                                    width:'250px'}}><p>Already have an account. </p></div>
+                                    width:'250px',
+                                    boxShadow:'-5px 7px 10px rgba(0, 0 , 0, 0.2)'}}><p>Already have an account. </p></div>
                 </FlexView>
                 <FlexView  style ={{backgroundColor:'#ffffffb5',borderTopRightRadius:'15px',borderBottomRightRadius:'15px',height: '100%', width: '65%' }} column>
                 <div>
                 <h2 id="register">Create an Account!!</h2>
                 </div>
-                <form>
-                        
+                <form>   
                         <FlexView>
                         <div style={{width: '50%', height:'fit-content'}}>
                             <input 

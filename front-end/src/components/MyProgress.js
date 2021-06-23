@@ -185,7 +185,11 @@ export default function MyProgress() {
       const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
       };
-    
+      
+      const getPerc = (completed, total) => {
+            let perc = (completed/total)*100;
+            return Math.round(perc*100)/100;
+      }
 
         return(
             <Flexview id="MP" column>
@@ -242,15 +246,15 @@ export default function MyProgress() {
                             <Flexview >
                                 <div className="circularBarDiv">
                                     <h2 className="LevelNames">Easy</h2>
-                                    <CircularProgressbar value={easyCompleted/easyTotal*100} text={`${easyCompleted/easyTotal*100}%`} />;
+                                    <CircularProgressbar value={(easyCompleted/easyTotal*100)} text={`${getPerc(easyCompleted,easyTotal)}%`} />;
                                 </div>
                                 <div className="circularBarDiv">
                                     <h2 className="LevelNames">Medium</h2>
-                                    <CircularProgressbar value={mediumCompleted/mediumTotal*100} text={`${mediumCompleted/mediumTotal*100}%`} />;
+                                    <CircularProgressbar value={mediumCompleted/mediumTotal*100} text={`${getPerc(mediumCompleted,mediumTotal)}%`} />;
                                 </div>
                                 <div className="circularBarDiv">
                                     <h2 className="LevelNames">Hard</h2>
-                                    <CircularProgressbar value={hardCompleted/hardTotal*100} text={`${hardCompleted/hardTotal*100}%`} />;
+                                    <CircularProgressbar value={hardCompleted/hardTotal*100} text={`${getPerc(hardCompleted,hardTotal)}%`} />;
                                 </div>
                             </Flexview>
                         </Flexview>
