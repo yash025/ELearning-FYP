@@ -107,14 +107,36 @@ export default class Register extends Component{
     render(){
         return(
             <div id="registerDiv">
-            <FlexView id="R" column >
+            <FlexView id="R"  >
+                <FlexView style = {{borderTopLeftRadius:'15px',
+                                    borderBottomLeftRadius:'15px' ,
+                                    backgroundColor: 'rgb(48 213 200 / 88%)', 
+                                    height: '100%', 
+                                    width: '35%',
+                                    fontSize: '20px',
+                                    }}column>
+                    <h1 style = {{marginLeft: 'auto',marginRight:'auto',fontFamily:'timesNewRoman',color: 'whitesmoke',marginTop: '45%', width: 'fit-content'}}> Welcome back!!</h1>
+                    <h2 style = {{marginLeft: 'auto',marginRight:'auto',fontFamily:'timesNewRoman',marginTop: '10%',color: 'whitesmoke'}}>Sign in to continue access.</h2>
+                    <div  onClick={() => router.stateService.go('login')} id="alreadyHaveAcc"style = {{marginLeft: 'auto',
+                                    marginRight:'auto',
+                                    fontFamily:'timesNewRoman',
+                                    marginTop: '2%',
+                                    color: 'whitesmoke', 
+                                    border: 'solid 2px white',
+                                    borderRadius: '40px',
+                                    backgroundColor: '#f5f5f54d',
+                                    width:'250px'}}><p>Already have an account. </p></div>
+                </FlexView>
+                <FlexView  style ={{backgroundColor:'#ffffffb5',borderTopRightRadius:'15px',borderBottomRightRadius:'15px',height: '100%', width: '65%' }} column>
                 <div>
-                <h2 id="register">Sign Up!!</h2>
+                <h2 id="register">Create an Account!!</h2>
                 </div>
                 <form>
-                        {/* <label style={{color:'black'}}>Username</label> */}
-                        <input 
-                        className="InputBlock"
+                        
+                        <FlexView>
+                        <div style={{width: '50%', height:'fit-content'}}>
+                            <input 
+                        className="InputBlock1 Name"
                         type="text"
                         name="firstName"
                         placeholder="Enter your first name"
@@ -122,8 +144,10 @@ export default class Register extends Component{
                         onChange={this.changeHandler}
                         required/>
                     <span className="Error" id="R1">This is a required field</span>
+                    </div>
+                    <div style={{width: '50%', height:'fit-content'}}> 
                     <input 
-                        className="InputBlock"
+                        className="InputBlock1 Name"
                         type="text"
                         name="lastName"
                         placeholder="Enter your last name"
@@ -131,8 +155,11 @@ export default class Register extends Component{
                         onChange={this.changeHandler}
                         required/>
                     <span className="Error" id="R2">This is a required field</span>
+                    </div>
+                        </FlexView>
+                        
                     <input 
-                        className="InputBlock"
+                        className="InputBlock1 Email"
                         type="email"
                         name="email"
                         placeholder="Enter Email id"
@@ -140,10 +167,10 @@ export default class Register extends Component{
                         onChange={this.changeHandler}
                         required/>
                     <span className="Error" id="R3">This is a required field</span>
-                    
-                    {/* <label style={{color:'black'}}>Password</label> */}
+                    <FlexView>
+                    <div style={{width: '50%', height:'fit-content'}}>
                     <input 
-                        className="InputBlock"
+                        className="InputBlock1 Password"
                         type="password"
                         name="password"
                         placeholder="Enter New Password"
@@ -151,8 +178,10 @@ export default class Register extends Component{
                         onChange={this.changeHandler}
                         required/>
                     <span className="Error" id="R4">This is a required field</span>
-                      <input 
-                        className="InputBlock"
+                    </div>
+                    <div style={{width: '50%', height:'fit-content'}}>
+                    <input 
+                        className="InputBlock1 Password"
                         type="password"
                         name="confirmPassword"
                         placeholder="Re-enter Password"
@@ -161,9 +190,12 @@ export default class Register extends Component{
                         required/>
                    
                     <span className="Error" id="R5">** Password Mismatch</span>
+                    </div>
 
+                    </FlexView>
+                   
                     <input 
-                        className="InputBlock"
+                        className="InputBlock1 Age"
                         type="text"
                         name="age"
                         placeholder="Enter your age"
@@ -172,7 +204,7 @@ export default class Register extends Component{
                         required/>  
                     <span className="Error" id="R6">This is a required field</span>
                     <input 
-                        className="InputBlock"
+                        className="InputBlock1 PhoneNumber"
                         type="text"
                         name="phoneNumber"
                         placeholder="Enter your phone number"
@@ -181,9 +213,11 @@ export default class Register extends Component{
                         required/>
                     <span className="Error" id="R7">This is a required field</span>
                     <button  id = "regButton" type="submit" onClick={this.submitHandler}>
-                        REGISTER
+                        SIGN IN!
                     </button>
                 </form>
+                </FlexView>
+                
                 
             </FlexView>
             </div>

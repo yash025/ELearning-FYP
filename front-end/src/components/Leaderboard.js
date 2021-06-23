@@ -81,10 +81,10 @@ export default function CustomizedTables() {
               <StyledTableCell >{row.points}</StyledTableCell>
             </StyledTableRow>
           ))}
-          <StyledTableRow key={userRow.rank}>
-             <StyledTableCell>{userRow.rank}</StyledTableCell>
-             <StyledTableCell>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>
-             <StyledTableCell>{userRow.points}</StyledTableCell>
+          <StyledTableRow style = {{backgroundColor: '#dbe6de', border: 'solid 2px green', fontWeight: 'bold'}}key={userRow.rank}>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.rank}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.points}</StyledTableCell>
           </StyledTableRow>
         </TableBody>
       </Table>

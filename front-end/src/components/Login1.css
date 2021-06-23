@@ -7,11 +7,11 @@
 .InputBlock {
     margin: 16px auto;
     padding: 16px;
-    text-align: center;
+    /* text-align: center; */
     width: 60%;
     background-color: rgba(218, 205, 205, 0.575);
     display: block;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     
     
 }
@@ -20,7 +20,7 @@
 }
 
 button {
-    background-color: #e06a878f;
+    /* background-color: #e06a878f; */
     width: 40%;
     height: 18%;
     margin: 16px;
