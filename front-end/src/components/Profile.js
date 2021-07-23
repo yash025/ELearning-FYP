@@ -110,8 +110,8 @@ export default class Profile extends Component{
         // }
         changedProfileDetails['email']= tempstorage.getProfile('email');
         console.log(changedProfileDetails);
-        let ch = {email: "paavana111@gmail.com", firstName: "Pavithra"};
-        let promise = postRequest("/updateProfile",ch); //store name, email, password, age in DB
+        // let ch = {email: "paavana111@gmail.com", firstName: "Pavithra"};
+        let promise = postRequest("/updateProfile",changedProfileDetails); //store name, email, password, age in DB
             console.log(profileInfo);
             promise.then(res => {
                 if(res.status === 200) {

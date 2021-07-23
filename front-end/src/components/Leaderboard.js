@@ -28,34 +28,19 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-// function createData(row) {
-//   return { row.userRank, row.firstName + row.lastName, row.points };
-// }
-
-// const rows = [
-//   createData(1, 'Paavana', 70),
-//   createData(2, 'Fieuhsaf', 70),
-//   createData(3, 'Diushaik', 70),
-//   createData(4, 'Sijaeoik', 70),
-//   createData(5, 'Rijaoidj', 70),
-//   createData(6, 'Lisuhdlkv', 70),
-//   createData(7, 'Wskuhiocas', 70),
-//   createData(8, 'Giuash', 70),
-//   createData(9, 'Ciaushd', 70),
-//   createData(10, 'Duihsaud', 70),
-//   createData(11, 'siuahf', 987),
-//   createData(12, 'Ekuahs', 872)
-// ];
-
 const useStyles = makeStyles({
   table: {
-    maxWidth: 300,
+    maxWidth: 500,
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
 });
 
 export default function CustomizedTables() {
   const classes = useStyles();
   const [rows,setRows] = React.useState([]);
+  const [userRow, setUserRow] =React.useState({});
+
   useEffect(() => {
     let email = tempstorage.getProfile('email');
     let promise = getRequest('/fetchRanks',{email: email});
@@ -63,10 +48,11 @@ export default function CustomizedTables() {
         if(res.status === 200) {
             console.log("LeaderBoardRecieved");
             console.log(res.data);
-              if(res.data.rankList.length !== 0) {
-                let list= [...res.data.rankList];
+              if(res.data.ranks.length !== 0) {
+                let list= [...res.data.ranks];
                 setRows(list);
               }
+              setUserRow(res.data.currentUserDetails)
         } else {
             alert("Leaderboard not recievd");
             // router.stateService.reload();
@@ -88,13 +74,23 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row) => {if(row.email=== userRow.email)return (<StyledTableRow style = {{backgroundColor: '#dbe6de', border: 'solid 2px green', fontWeight: 'bold'}}key={userRow.rank}>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.rank}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.points}</StyledTableCell>
+          </StyledTableRow>)
+          return (
             <StyledTableRow key={row.rank}>
               <StyledTableCell >{row.rank}</StyledTableCell>
-              <StyledTableCell >{row.firstName + row.lastName}</StyledTableCell>
+              <StyledTableCell >{row.firstName +" "+ row.lastName}</StyledTableCell>
               <StyledTableCell >{row.points}</StyledTableCell>
             </StyledTableRow>
-          ))}
+          )})}
+          <StyledTableRow style = {{backgroundColor: '#dbe6de', border: 'solid 2px green', fontWeight: 'bold'}}key={userRow.rank}>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.rank}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.firstName +" "+ userRow.lastName}</StyledTableCell>
+             <StyledTableCell style = {{ fontWeight: '900'}}>{userRow.points}</StyledTableCell>
+          </StyledTableRow>
         </TableBody>
       </Table>
     // </TableContainer>

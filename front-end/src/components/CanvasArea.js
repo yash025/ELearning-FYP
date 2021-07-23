@@ -44,59 +44,79 @@ const CanvasArea = props => {
     contextRef.current.stroke()
   }
   
+  async function urlReshaper(url){
+    var canvas1 = document.createElement("canvas");
+    var ctx = canvas1.getContext("2d");
+    canvas1.width = 28;
+    canvas1.height = 28;
+
+    var image = new Image();
+    image.src = url;
+    await image.decode();
+    ctx.drawImage(image,0,0,image.width,image.height,0,0,canvas1.width,canvas1.height);
+    return canvas1.toDataURL()
+  };
+
   const urlConverter = () => {
     var canvas = document.getElementById("canvas");
-    var dataUrl = canvas.toDataURL();
-    console.log(dataUrl);
-    let data = {}
+    var url = canvas.toDataURL();
+    // loadImage()
+    var dataUrl;
+    urlReshaper(url).then(res => {
+      dataUrl = res;
+      console.log(res)
+      let data = {}
 
-    //Learning
-    if(props.objectProperty && props.objectProperty.type === "learning") {
-      data = {
-        type: props.objectProperty.type,
-        dataUrl: dataUrl,
-        category: props.objectProperty.category,
-        selected: props.objectProperty.selected
-      }
-    } else {
-      data = {
-        type: props.objectProperty.type,
-        dataUrl: dataUrl,
-        chosen: props.objectProperty.chosen,
-        level: props.objectProperty.level 
-      }
-    }
-    console.log(data);
-
-    let promise = getRequest("/canvas",data);
-    console.log(promise);
-    promise.then(res => {
-    if(res.status === 200) {
-        alert("Url sent, Recieved drawn Status");
-          console.log(res)
-        if(res.data.result)
-        {
-                //Learning
-                if(props.objectProperty && props.objectProperty.learningComplete){
-                  props.objectProperty.learningComplete(props.objectProperty.selected)
-                }
-
-                //Drawing
-                if(props.objectProperty && props.objectProperty.drawingComplete) {
-                  props.objectProperty.drawingComplete(props.objectProperty.level)
-                }
+      //Learning
+      if(props.objectProperty && props.objectProperty.type === "learning") {
+        data = {
+          type: props.objectProperty.type,
+          dataUrl: dataUrl,
+          category: props.objectProperty.category,
+          selected: props.objectProperty.selected
         }
-        else{
-          alert("Incorrect drawing, try again.");
+      } else {
+        data = {
+          type: props.objectProperty.type,
+          dataUrl: dataUrl,
+          chosen: props.objectProperty.chosen,
+          level: props.objectProperty.level 
         }
-    } else {
-        alert("dataurl not sent, drawnStatus not recieved");
-        // router.stateService.reload();
       }
-    }).catch(res=>{
-          alert("Could not connect.");
-          
-      })
+      console.log(data);
+  
+      let promise = getRequest("/canvas",data);
+      console.log(promise);
+      promise.then(res => {
+      if(res.status === 200) {
+          alert("Url sent, Recieved drawn Status");
+            console.log(res)
+          if(res.data.result)
+          {
+                  //Learning
+                  if(props.objectProperty && props.objectProperty.learningComplete){
+                    props.objectProperty.learningComplete(props.objectProperty.selected)
+                  }
+  
+                  //Drawing
+                  if(props.objectProperty && props.objectProperty.drawingComplete) {
+                    props.objectProperty.drawingComplete(props.objectProperty.level)
+                  }
+          }
+          else{
+            alert("Incorrect drawing, try again.");
+          }
+      } else {
+          alert("dataurl not sent, drawnStatus not recieved");
+          // router.stateService.reload();
+        }
+      }).catch(res=>{
+            alert("Could not connect.");
+            
+        })
+    })
+    
+
       
   }
 
